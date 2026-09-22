@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация в Roblox</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            user-select: none;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .age-display {
+            background: #667eea;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🎮 ROBLOX</h1>
+            <p>Создай свой профиль игрока</p>
+        </div>
+
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="username">Имя игрока *</label>
+                <select id="username" required>
+                    <option value="">Выберите имя</option>
+                </select>
+                <p class="info-text">Выберите имя из списка</p>
+            </div>
+
+            <div class="form-group">
+                <label for="surname">Фамилия *</label>
+                <input type="text" id="surname" required maxlength="15" minlength="2">
+                <span class="error" id="surnameError">Введите корректную фамилию (2-15 символов)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="patronymic">Отчество *</label>
+                <input type="text" id="patronymic" required maxlength="15" minlength="2">
+                <span class="error" id="patronymicError">Введите корректное отчество (2-15 символов)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль *</label>
+                <div class="password-container">
+                    <input type="password" id="password" required minlength="8" maxlength="16">
+                    <span class="password-toggle" onclick="togglePassword()">👁️</span>
+                </div>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="strengthBar"></div>
+                </div>
+                <p class="strength-text" id="strengthText"></p>
+                <p class="info-text">8-16 символов, используйте буквы и цифры</p>
+                <span class="error" id="passwordError">Пароль должен содержать 8-16 символов</span>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Подтвердите пароль *</label>
+                <div class="password-container">
+                    <input type="password" id="confirmPassword" required minlength="8" maxlength="16">
+                    <span class="password-toggle" onclick="toggleConfirmPassword()">👁️</span>
+                </div>
+                <span class="error" id="confirmError">Пароли не совпадают</span>
+            </div>
+
+            <div class="form-group">
+                <label>Возраст</label>
+                <div class="age-display">10 лет</div>
+                <input type="hidden" id="age" value="10">
+            </div>
+
+            <button type="submit" class="btn">Зарегистрироваться</button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            ✅ Регистрация успешна! Добро пожаловать в Roblox!
+        </div>
+    </div>
+
+    <script>
+        // Список имен
+        const names = [
+            'Ли', 'Ян', 'Лев', 'Макс', 'Иван', 'Петр', 'Анна', 'Мария', 'Ольга',
+            'Александр', 'Дмитрий', 'Сергей', 'Андрей', 'Михаил', 'Николай',
+            'Владимир', 'Екатерина', 'Наталья', 'Татьяна', 'Елена', 'Юрий',
+            'Артем', 'Кирилл', 'Денис', 'Павел', 'Роман', 'Виктор', 'Игорь'
+        ];
+
+        // Заполнение списка имен
+        const usernameSelect = document.getElementById('username');
+        names.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            usernameSelect.appendChild(option);
+        });
+
+        // Список запрещенных слов
+        const badWords = ['дурак', 'идиот', 'тупой', 'глупый', 'плохой'];
+
+        // Функция проверки на оскорбления
+        function containsBadWords(text) {
+            const lowerText = text.toLowerCase();
+            return badWords.some(word => lowerText.includes(word));
+        }
+
+        // Функция капитализации
+        function capitalize(text) {
+            if (!text) return '';
+            return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+        }
+
+        // Автоматическая капитализация
+        document.getElementById('surname').addEventListener('input', function(e) {
+            const cursorPos = e.target.selectionStart;
+            e.target.value = capitalize(e.target.value);
+            e.target.setSelectionRange(cursorPos, cursorPos);
+            validateField(e.target, 'surnameError');
+        });
+
+        document.getElementById('patronymic').addEventListener('input', function(e) {
+            const cursorPos = e.target.selectionStart;
+            e.target.value = capitalize(e.target.value);
+            e.target.setSelectionRange(cursorPos, cursorPos);
+            validateField(e.target, 'patronymicError');
+        });
+
+        // Валидация полей
+        function validateField(field, errorId) {
+            const error = document.getElementById(errorId);
+            const value = field.value.trim();
+            
+            if (value.length < 2 || value.length > 15) {
+                error.style.display = 'block';
+                field.style.borderColor = '#e74c3c';
+                return false;
+            }
+            
+            if (containsBadWords(value)) {
+                error.textContent = 'Недопустимое слово';
+                error.style.display = 'block';
+                field.style.borderColor = '#e74c3c';
+                return false;
+            }
+            
+            error.style.display = 'none';
+            field.style.borderColor = '#2ecc71';
+            return true;
+        }
+
+        // Показать/скрыть пароль
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+        }
+
+        function toggleConfirmPassword() {
+            const confirmField = document.getElementById('confirmPassword');
+            confirmField.type = confirmField.type === 'password' ? 'text' : 'password';
+        }
+
+        // Проверка силы пароля
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            const passwordError = document.getElementById('passwordError');
+            
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 25;
+            if (password.length >= 12) strength += 25;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 25;
+            
+            strengthBar.style.width = strength + '%';
+            
+            if (strength <= 25) {
+                strengthBar.style.background = '#e74c3c';
+                strengthText.textContent = 'Слабый пароль';
+                strengthText.style.color = '#e74c3c';
+            } else if (strength <= 50) {
+                strengthBar.style.background = '#f39c12';
+                strengthText.textContent = 'Средний пароль';
+                strengthText.style.color = '#f39c12';
+            } else if (strength <= 75) {
+                strengthBar.style.background = '#3498db';
+                strengthText.textContent = 'Хороший пароль';
+                strengthText.style.color = '#3498db';
+            } else {
+                strengthBar.style.background = '#2ecc71';
+                strengthText.textContent = 'Отличный пароль';
+                strengthText.style.color = '#2ecc71';
+            }
+
+            if (password.length < 8 || password.length > 16) {
+                passwordError.style.display = 'block';
+                e.target.style.borderColor = '#e74c3c';
+            } else {
+                passwordError.style.display = 'none';
+                e.target.style.borderColor = '#2ecc71';
+            }
+        });
+
+        // Проверка совпадения паролей
+        document.getElementById('confirmPassword').addEventListener('input', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = e.target.value;
+            const confirmError = document.getElementById('confirmError');
+            
+            if (password !== confirmPassword) {
+                confirmError.style.display = 'block';
+                e.target.style.borderColor = '#e74c3c';
+            } else {
+                confirmError.style.display = 'none';
+                e.target.style.borderColor = '#2ecc71';
+            }
+        });
+
+        // Отправка формы
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const surname = document.getElementById('surname').value;
+            const patronymic = document.getElementById('patronymic').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Валидация
+            if (!username) {
+                alert('Выберите имя из списка');
+                return;
+            }
+            
+            if (!validateField(document.getElementById('surname'), 'surnameError')) {
+                return;
+            }
+            
+            if (!validateField(document.getElementById('patronymic'), 'patronymicError')) {
+                return;
+            }
+            
+            if (password.length < 8 || password.length > 16) {
+                alert('Пароль должен содержать от 8 до 16 символов');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Пароли не совпадают');
+                return;
+            }
+            
+            // Успешная регистрация
+            document.getElementById('successMessage').style.display = 'block';
+            this.style.display = 'none';
+            
+            console.log('Регистрация:', {
+                username: username,
+                surname: surname,
+                patronymic: patronymic,
+                age: 10,
+                password: '***защищено***'
+            });
+        });
+    </script>
+</body>
+</html>
