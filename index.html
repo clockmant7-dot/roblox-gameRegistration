@@ -6,15 +6,18 @@
     <title>Roblox Studio Activation</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: white; }
-        .container { background: white; color: #333; border-radius: 20px; padding: 30px; width: 100%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: white; padding: 20px; }
+        .container { background: white; color: #333; border-radius: 20px; padding: 30px; width: 100%; max-width: 420px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         .logo { text-align: center; margin-bottom: 20px; background: #1e293b; padding: 15px; border-radius: 12px; color: #38bdf8; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 13px; }
-        .input-row { display: flex; gap: 5px; }
-        input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; }
-        .rand-btn { background: #38bdf8; color: white; border: none; border-radius: 8px; width: 45px; cursor: pointer; font-size: 18px; }
-        .btn { width: 100%; padding: 12px; background: #38bdf8; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 13px; color: #1e293b; }
+        .input-row { display: flex; gap: 6px; }
+        input, select { width: 100%; padding: 10px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; }
+        input:focus, select:focus { border-color: #38bdf8; }
+        .rand-btn { background: #38bdf8; color: white; border: none; border-radius: 8px; width: 45px; cursor: pointer; font-size: 18px; flex-shrink: 0; transition: 0.2s; }
+        .rand-btn:hover { background: #0284c7; }
+        .btn { width: 100%; padding: 12px; background: #38bdf8; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn:hover { background: #0284c7; }
         .code-box { background: #0f172a; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: monospace; font-size: 26px; font-weight: bold; text-align: center; margin: 15px 0; border: 2px dashed #38bdf8; }
     </style>
 </head>
@@ -22,26 +25,50 @@
 
 <div class="container">
     <div id="formSection">
-        <div class="logo"><h2>ROBLOX CODE</h2><p style="color:white; font-size:10px">GET YOUR KEY</p></div>
+        <div class="logo">
+            <h2>ROBLOX STUDIO</h2>
+            <p style="color:white; font-size:10px">СИСТЕМА РЕГИСТРАЦИИ</p>
+        </div>
         <form id="regForm">
             <div class="form-group">
-                <label>Ваш никнейм в Roblox *</label>
+                <label>Никнейм в Roblox *</label>
                 <input type="text" id="robloxNick" placeholder="Точно как в игре" required>
             </div>
+            
             <div class="form-group">
-                <label>Имя персонажа</label>
+                <label>Имя персонажа *</label>
                 <div class="input-row">
-                    <select id="firstName"></select>
-                    <button type="button" class="rand-btn" onclick="randSelect()">🎲</button>
+                    <select id="firstName" required></select>
+                    <button type="button" class="rand-btn" onclick="randSelect()" title="Случайное имя">🎲</button>
                 </div>
             </div>
+
             <div class="form-group">
-                <label>Фамилия и Отчество (любые)</label>
+                <label>Фамилия *</label>
                 <div class="input-row">
-                    <input type="text" id="extraInfo" placeholder="Фамилия Отчество">
-                    <button type="button" class="rand-btn" onclick="randExtra()">🎲</button>
+                    <input type="text" id="surname" placeholder="С большой буквы" required>
+                    <button type="button" class="rand-btn" onclick="randInput('surname', surnamesList)" title="Случайная фамилия">🎲</button>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label>Отчество *</label>
+                <div class="input-row">
+                    <input type="text" id="patronymic" placeholder="С большой буквы" required>
+                    <button type="button" class="rand-btn" onclick="randInput('patronymic', patronymicsList)" title="Случайное отчество">🎲</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Пароль (8-16 символов) *</label>
+                <input type="password" id="pass" minlength="8" maxlength="16" placeholder="🔒 Защищен" required>
+            </div>
+
+            <div class="form-group">
+                <label>Возраст</label>
+                <input type="text" value="10 лет" disabled style="background:#f1f5f9; text-align:center; font-weight:bold; color:#64748b;">
+            </div>
+
             <button type="submit" class="btn">ПОЛУЧИТЬ КОД</button>
         </form>
     </div>
@@ -49,28 +76,85 @@
     <div id="activationScreen" style="display:none; text-align:center;">
         <h2 style="color: #38bdf8;">ВАШ КОД:</h2>
         <div class="code-box" id="displayCode"></div>
-        <p style="font-size: 12px; color: #666;">Введите этот код при входе в игру. Он привязан к вашему нику!</p>
+        <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">Введите этот код при входе в игру. Он привязан к вашему нику!</p>
         <button class="btn" onclick="location.reload()" style="background:#64748b;">НАЗАД</button>
     </div>
 </div>
 
 <script>
-    const names = ['Александр', 'Максим', 'Иван', 'Артем', 'Дмитрий', 'Никита', 'Михаил', 'Даниил', 'Егор', 'Андрей', 'Илья', 'Алексей', 'Роман', 'Сергей', 'Владислав', 'Ярослав', 'Тимофей', 'Евгений', 'Денис', 'Матвей', 'Павел', 'Антон', 'Кирилл', 'Виктор', 'Григорий', 'Анна', 'Мария', 'Елена', 'Дарья', 'Алина', 'Ирина', 'Екатерина', 'Анастасия', 'Наталья', 'Виктория', 'Ксения', 'Татьяна', 'Александра', 'Полина', 'София', 'Ольга', 'Валерия', 'Юлия', 'Маргарита', 'Алиса', 'Ева', 'Милана', 'Алена', 'Кристина', 'Диана', 'Богдан', 'Глеб', 'Дамир', 'Давид', 'Марк', 'Мирон', 'Макар', 'Назар', 'Руслан', 'Святослав', 'Степан', 'Тихон', 'Федор', 'Ян', 'Аделина', 'Ариана', 'Белла', 'Василиса', 'Вероника', 'Злата', 'Инна', 'Карина', 'Кира', 'Лада', 'Лилия', 'Любовь', 'Майя', 'Мирослава', 'Надежда', 'Ника', 'Светлана', 'Элина', 'Яна'];
-    const sours = ['Иванов', 'Смирнов', 'Кузнецов', 'Попов', 'Васильев', 'Петров', 'Соколов', 'Михайлов', 'Новиков', 'Федоров', 'Морозов', 'Волков', 'Алексеев', 'Лебедев', 'Семенов', 'Егоров', 'Павлов', 'Козлов', 'Степанов', 'Николаев', 'Орлов', 'Андреев', 'Макаров', 'Никитин', 'Захаров'];
-    
-    const sel = document.getElementById('firstName');
-    names.forEach(n => { let o = document.createElement('option'); o.value=n; o.textContent=n; sel.appendChild(o); });
+    // Большой список имен (от 2 до 15 букв)
+    const namesList = [
+        'Ли', 'Ян', 'Лев', 'Макс', 'Иван', 'Петр', 'Анна', 'Мария', 'Ольга', 'Алекс', 
+        'Александр', 'Максим', 'Артем', 'Дмитрий', 'Никита', 'Михаил', 'Даниил', 'Егор', 
+        'Андрей', 'Илья', 'Алексей', 'Роман', 'Сергей', 'Владислав', 'Ярослав', 'Тимофей', 
+        'Евгений', 'Денис', 'Матвей', 'Павел', 'Антон', 'Кирилл', 'Виктор', 'Григорий', 
+        'Дарья', 'Алина', 'Ирина', 'Екатерина', 'Анастасия', 'Наталья', 'Виктория', 
+        'Ксения', 'Татьяна', 'Александра', 'Полина', 'София', 'Валерия', 'Юлия', 'Маргарита', 
+        'Алиса', 'Ева', 'Милана', 'Алена', 'Кристина', 'Диана', 'Богдан', 'Глеб', 'Дамир', 
+        'Марк', 'Мирон', 'Макар', 'Руслан', 'Степан', 'Федор', 'Василиса', 'Вероника', 
+        'Злата', 'Кира', 'Лилия', 'Мирослава', 'Яна'
+    ];
 
-    function randSelect() { sel.selectedIndex = Math.floor(Math.random() * sel.options.length); }
-    function randExtra() { document.getElementById('extraInfo').value = sours[Math.floor(Math.random()*sours.length)] + " " + names[Math.floor(Math.random()*names.length)] + "ович"; }
+    // Правильные мужские и женские фамилии
+    const surnamesList = [
+        'Иванов', 'Иванова', 'Смирнов', 'Смирнова', 'Кузнецов', 'Кузнецова', 'Попов', 'Попова', 
+        'Васильев', 'Васильева', 'Петров', 'Петрова', 'Соколов', 'Соколова', 'Михайлов', 'Михайлова', 
+        'Новиков', 'Новикова', 'Федоров', 'Федорова', 'Морозов', 'Морозова', 'Волков', 'Волкова', 
+        'Алексеев', 'Алексеева', 'Лебедев', 'Лебедева', 'Семенов', 'Семенова', 'Павлов', 'Павлова', 
+        'Козлов', 'Козлова', 'Степанов', 'Степанова', 'Орлов', 'Орлова', 'Макаров', 'Макарова'
+    ];
 
+    // Правильные мужские (-вич) и женские (-вна) отчества
+    const patronymicsList = [
+        'Александрович', 'Александровна', 'Иванович', 'Ивановна', 'Максимович', 'Максимовна', 
+        'Сергеевич', 'Сергеевна', 'Дмитриевич', 'Дмитриевна', 'Андреевич', 'Андреевна', 
+        'Алексеевич', 'Алексеевна', 'Михайлович', 'Михайловна', 'Евгеньевич', 'Евгеньевна', 
+        'Владимирович', 'Владимировна', 'Николаевич', 'Николаевна', 'Романович', 'Романовна', 
+        'Егорович', 'Егоровна', 'Денисович', 'Денисовна', 'Артемович', 'Артемовна', 
+        'Викторович', 'Викторовна', 'Игоревич', 'Игоревна', 'Павлович', 'Павловна'
+    ];
+
+    // Заполнение выпадающего списка имен
+    const select = document.getElementById('firstName');
+    namesList.forEach(n => {
+        let opt = document.createElement('option');
+        opt.value = n;
+        opt.textContent = n;
+        select.appendChild(opt);
+    });
+
+    // Автоматическая заглавная буква
+    function autoCapitalize(id) {
+        document.getElementById(id).addEventListener('input', function() {
+            if (this.value.length > 0) {
+                this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
+            }
+        });
+    }
+    autoCapitalize('surname');
+    autoCapitalize('patronymic');
+
+    // Функция генерации случайных полей
+    function randInput(id, list) {
+        document.getElementById(id).value = list[Math.floor(Math.random() * list.length)];
+    }
+
+    function randSelect() {
+        select.selectedIndex = Math.floor(Math.random() * select.options.length);
+    }
+
+    // Математический генератор кода
     function getCode(nick) {
-        let sum = 0; nick = nick.toLowerCase().trim();
-        for (let i=0; i<nick.length; i++) sum += nick.charCodeAt(i) * (i + 1);
+        let sum = 0;
+        nick = nick.toLowerCase().trim();
+        for (let i = 0; i < nick.length; i++) {
+            sum += nick.charCodeAt(i) * (i + 1);
+        }
         const s = String((sum * 777) + 12345).padEnd(8, '0');
         return `RBX-${s.slice(0,4)}-${s.slice(4,8)}`;
     }
 
+    // Обработка формы
     document.getElementById('regForm').onsubmit = function(e) {
         e.preventDefault();
         document.getElementById('formSection').style.display = 'none';
