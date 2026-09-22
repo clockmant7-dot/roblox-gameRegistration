@@ -3,1314 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация в Roblox Studio</title>
+    <title>Roblox Studio Activation</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            color: white;
         }
-
         .container {
-            background: white;
+            background: #ffffff;
+            color: #333;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             padding: 40px;
             width: 100%;
-            max-width: 550px;
-            animation: slideIn 0.5s ease-out;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes glow {
-            0% { text-shadow: 0 0 10px #00a2ff; }
-            50% { text-shadow: 0 0 25px #00a2ff, 0 0 50px #00a2ff; }
-            100% { text-shadow: 0 0 10px #00a2ff; }
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0,162,255,0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(0,162,255,0); }
-            100% { box-shadow: 0 0 0 0 rgba(0,162,255,0); }
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 25px;
-            padding: 20px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
-            border-radius: 15px;
-        }
-
-        .logo h1 {
-            color: #00a2ff;
-            font-size: 26px;
-            font-weight: bold;
-            animation: glow 2s infinite;
-        }
-
-        .logo p {
-            color: rgba(255,255,255,0.7);
-            font-size: 13px;
-            margin-top: 5px;
-        }
-
-        .studio-badge {
-            background: #00a2ff;
-            color: white;
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 7px;
-            font-size: 14px;
-        }
-
+        .logo { text-align: center; margin-bottom: 30px; background: #1a1a2e; padding: 20px; border-radius: 15px; }
+        .logo h1 { color: #00a2ff; font-size: 24px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; }
         input, select {
-            width: 100%;
-            padding: 11px 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s;
-            background: #f8f9fa;
+            width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px;
         }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #00a2ff;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(0,162,255,0.1);
-        }
-
-        .password-container { position: relative; }
-
-        .password-toggle {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 17px;
-            user-select: none;
-        }
-
-        .password-strength {
-            margin-top: 7px;
-            height: 4px;
-            background: #e0e0e0;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .password-strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: all 0.3s;
-            border-radius: 2px;
-        }
-
-        .strength-text {
-            font-size: 12px;
-            margin-top: 4px;
-            font-weight: 600;
-        }
-
-        .error {
-            color: #e74c3c;
-            font-size: 12px;
-            margin-top: 4px;
-            display: none;
-        }
-
-        .age-display {
-            background: linear-gradient(135deg, #1a1a2e, #0f3460);
-            color: white;
-            padding: 11px 14px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            text-align: center;
-        }
-
         .btn {
-            width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, #00a2ff 0%, #0f3460 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 8px;
+            width: 100%; padding: 15px; background: #00a2ff; color: white; border: none;
+            border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,162,255,0.4);
-        }
-
-        .info-text {
-            font-size: 11px;
-            color: #888;
-            margin-top: 4px;
-        }
-
-        /* Экран активации */
-        .activation-screen {
-            display: none;
-            animation: slideIn 0.5s ease-out;
-        }
-
+        .btn:hover { background: #0084d1; transform: translateY(-2px); }
+        .activation-screen { display: none; text-align: center; }
         .code-box {
-            background: linear-gradient(135deg, #1a1a2e, #0f3460);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
-            text-align: center;
-            animation: pulse 2s infinite;
+            background: #1a1a2e; color: #00a2ff; padding: 25px; border-radius: 15px;
+            font-family: monospace; font-size: 32px; font-weight: bold; margin: 20px 0;
+            letter-spacing: 5px; border: 2px dashed #00a2ff;
         }
-
-        .code-label {
-            color: rgba(255,255,255,0.6);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-        }
-
-        .code-text {
-            color: #00a2ff;
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 6px;
-            font-family: 'Courier New', monospace;
-            animation: glow 2s infinite;
-        }
-
-        .copy-btn {
-            background: rgba(0,162,255,0.15);
-            color: #00a2ff;
-            border: 2px solid #00a2ff;
-            border-radius: 8px;
-            padding: 7px 18px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: all 0.3s;
-        }
-
-        .copy-btn:hover {
-            background: #00a2ff;
-            color: white;
-        }
-
-        .copied-text {
-            color: #2ecc71;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 6px;
-            display: none;
-        }
-
-        .timer-box {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 10px 15px;
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .timer-text {
-            color: #856404;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .timer-count {
-            color: #e74c3c;
-            font-size: 20px;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-        }
-
-        .user-info {
-            background: #f0f8ff;
-            border: 2px solid #00a2ff;
-            border-radius: 12px;
-            padding: 14px;
-            margin: 12px 0;
-        }
-
-        .user-info h3 {
-            color: #0f3460;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
-
-        .user-info p {
-            color: #555;
-            font-size: 12px;
-            margin-bottom: 3px;
-        }
-
-        /* Скрипты */
-        .scripts-section {
-            margin-top: 20px;
-        }
-
-        .scripts-section h3 {
-            color: #0f3460;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #00a2ff;
-        }
-
-        .script-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 15px;
-        }
-
-        .script-tab {
-            padding: 7px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.2s;
-        }
-
-        .script-tab.active {
-            border-color: #00a2ff;
-            background: #f0f8ff;
-            color: #00a2ff;
-        }
-
-        .script-tab:hover {
-            border-color: #00a2ff;
-            color: #00a2ff;
-        }
-
-        .script-content {
-            display: none;
-        }
-
-        .script-content.active {
-            display: block;
-        }
-
-        .script-info {
-            background: #f0f8ff;
-            border-left: 4px solid #00a2ff;
-            border-radius: 0 8px 8px 0;
-            padding: 10px 14px;
-            margin-bottom: 10px;
-        }
-
-        .script-info p {
-            color: #0f3460;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        .script-info strong {
-            color: #00a2ff;
-        }
-
-        /* Lua блок */
-        .lua-box {
-            background: #1e1e1e;
-            border-radius: 10px;
-            padding: 15px;
-            position: relative;
-            margin-bottom: 10px;
-        }
-
-        .lua-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .lua-title {
-            color: #888;
-            font-size: 11px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .lua-dots {
-            display: flex;
-            gap: 5px;
-        }
-
-        .lua-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .dot-red { background: #ff5f57; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #28ca41; }
-
-        .lua-code {
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            line-height: 1.7;
-            color: #d4d4d4;
-            white-space: pre;
-            overflow-x: auto;
-        }
-
-        .c-keyword { color: #569cd6; }
-        .c-string { color: #ce9178; }
-        .c-comment { color: #6a9955; }
-        .c-function { color: #dcdcaa; }
-        .c-number { color: #b5cea8; }
-        .c-var { color: #9cdcfe; }
-        .c-operator { color: #d4d4d4; }
-        .c-property { color: #4ec9b0; }
-
-        .copy-script-btn {
-            background: #2d2d2d;
-            color: #888;
-            border: 1px solid #444;
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .copy-script-btn:hover {
-            background: #3d3d3d;
-            color: white;
-        }
-
-        .where-to-place {
-            background: #1e1e1e;
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin-top: 8px;
-        }
-
-        .where-to-place p {
-            color: #888;
-            font-size: 11px;
-            margin-bottom: 5px;
-        }
-
-        .where-to-place span {
-            color: #4ec9b0;
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-        }
-
-        .new-code-btn {
-            background: linear-gradient(135deg, #00a2ff, #0f3460);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-
-        .new-code-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,162,255,0.4);
-        }
-
-        /* Категории скриптов */
-        .category-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: bold;
-            margin-left: 6px;
-        }
-
-        .badge-basic { background: #d4edda; color: #155724; }
-        .badge-medium { background: #fff3cd; color: #856404; }
-        .badge-advanced { background: #f8d7da; color: #721c24; }
+        .info-box { background: #f0f8ff; padding: 15px; border-radius: 10px; text-align: left; font-size: 13px; margin-bottom: 20px; border-left: 5px solid #00a2ff; }
+        .error { color: red; font-size: 12px; display: none; margin-top: 5px; }
     </style>
 </head>
 <body>
-<div class="container">
 
-    <!-- Форма регистрации -->
+<div class="container">
+    <!-- Форма -->
     <div id="formSection">
         <div class="logo">
-            <h1>⚙️ ROBLOX STUDIO</h1>
-            <p>Регистрация разработчика</p>
-            <span class="studio-badge">DEVELOPER EDITION</span>
+            <h1>⚙️ ROBLOX ACTIVATION</h1>
+            <p style="color: #888; font-size: 12px;">Введите данные вашего аккаунта Roblox</p>
         </div>
 
-        <form id="registrationForm">
+        <form id="regForm">
             <div class="form-group">
-                <label>👤 Имя игрока *</label>
-                <select id="username" required>
-                    <option value="">Выберите имя</option>
-                </select>
+                <label>Ваше имя в Roblox (Никнейм) *</label>
+                <input type="text" id="robloxNick" placeholder="Точно как в игре" required>
+                <p style="font-size: 11px; color: #666; margin-top: 5px;">Внимание: код будет работать только для этого ника!</p>
             </div>
 
             <div class="form-group">
-                <label>📝 Фамилия *</label>
-                <input type="text" id="surname" placeholder="Введите фамилию" required maxlength="15" minlength="2">
-                <span class="error" id="surnameError">Введите корректную фамилию (2-15 символов)</span>
+                <label>Имя из списка *</label>
+                <select id="firstName" required></select>
             </div>
 
             <div class="form-group">
-                <label>📝 Отчество *</label>
-                <input type="text" id="patronymic" placeholder="Введите отчество" required maxlength="15" minlength="2">
-                <span class="error" id="patronymicError">Введите корректное отчество (2-15 символов)</span>
+                <label>Фамилия *</label>
+                <input type="text" id="surname" required maxlength="15">
             </div>
 
             <div class="form-group">
-                <label>🔒 Пароль *</label>
-                <div class="password-container">
-                    <input type="password" id="password" placeholder="Придумайте пароль" required minlength="8" maxlength="16">
-                    <span class="password-toggle" onclick="togglePassword()">👁️</span>
-                </div>
-                <div class="password-strength">
-                    <div class="password-strength-bar" id="strengthBar"></div>
-                </div>
-                <p class="strength-text" id="strengthText"></p>
-                <p class="info-text">8-16 символов</p>
-                <span class="error" id="passwordError">Пароль должен содержать 8-16 символов</span>
+                <label>Отчество *</label>
+                <input type="text" id="patronymic" required maxlength="15">
             </div>
 
             <div class="form-group">
-                <label>🔒 Подтвердите пароль *</label>
-                <div class="password-container">
-                    <input type="password" id="confirmPassword" placeholder="Повторите пароль" required minlength="8" maxlength="16">
-                    <span class="password-toggle" onclick="toggleConfirmPassword()">👁️</span>
-                </div>
-                <span class="error" id="confirmError">Пароли не совпадают</span>
+                <label>Пароль (8-16 символов) *</label>
+                <input type="password" id="pass" minlength="8" maxlength="16" required>
             </div>
 
             <div class="form-group">
-                <label>🎂 Возраст</label>
-                <div class="age-display">10 лет</div>
+                <label>Возраст</label>
+                <div style="background: #eee; padding: 10px; border-radius: 10px; text-align: center; font-weight: bold;">10 лет</div>
             </div>
 
-            <button type="submit" class="btn">⚙️ Зарегистрироваться</button>
+            <button type="submit" class="btn">ПОЛУЧИТЬ КОД</button>
         </form>
     </div>
 
-    <!-- Экран активации -->
+    <!-- Экран с кодом -->
     <div class="activation-screen" id="activationScreen">
-        <div class="logo">
-            <h1>⚙️ ROBLOX STUDIO</h1>
-            <span class="studio-badge">АКТИВАЦИЯ УСПЕШНА</span>
+        <h2 style="color: #00a2ff;">УСПЕШНО!</h2>
+        <p>Ваш персональный код активации:</p>
+        
+        <div class="code-box" id="resultCode">RBX-0000-0000</div>
+        
+        <div class="info-box">
+            <strong>Как использовать:</strong><br>
+            1. Зайдите в игру под ником <b id="showNick"></b><br>
+            2. Введите код в появившемся окне.<br>
+            3. Если код не подходит, проверьте, правильно ли написан ник.
         </div>
-
-        <div class="user-info">
-            <h3>👤 Профиль разработчика:</h3>
-            <p id="displayName"></p>
-            <p>🎂 Возраст: 10 лет</p>
-            <p>⚙️ Роль: <strong>Junior Developer</strong></p>
-        </div>
-
-        <div class="code-box">
-            <p class="code-label">🔑 Код активации Studio</p>
-            <div class="code-text" id="activationCode">----</div>
-            <br>
-            <button class="copy-btn" onclick="copyCode()">📋 Скопировать код</button>
-            <p class="copied-text" id="copiedText">✅ Скопировано!</p>
-        </div>
-
-        <div class="timer-box">
-            <span class="timer-text">⏰ Код действителен:</span>
-            <span class="timer-count" id="timerCount">15:00</span>
-        </div>
-
-        <!-- Скрипты -->
-        <div class="scripts-section">
-            <h3>💻 Скрипты для Roblox Studio</h3>
-
-            <div class="script-tabs">
-                <div class="script-tab active" onclick="switchScript('activation')">🔑 Активация</div>
-                <div class="script-tab" onclick="switchScript('speed')">⚡ Скорость</div>
-                <div class="script-tab" onclick="switchScript('jump')">🦘 Прыжок</div>
-                <div class="script-tab" onclick="switchScript('gui')">🖥️ GUI</div>
-                <div class="script-tab" onclick="switchScript('teleport')">🌀 Телепорт</div>
-                <div class="script-tab" onclick="switchScript('leaderstats')">🏆 Очки</div>
-                <div class="script-tab" onclick="switchScript('door')">🚪 Дверь</div>
-                <div class="script-tab" onclick="switchScript('shop')">🛒 Магазин</div>
-            </div>
-
-            <!-- Скрипт активации -->
-            <div class="script-content active" id="script-activation">
-                <div class="script-info">
-                    <p>Этот скрипт проверяет код активации. Вставьте его в <strong>ServerScriptService</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">ActivationScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- 🔑 Скрипт активации Roblox Studio</span>
-<span class="c-comment">-- Вставить в: ServerScriptService</span>
-
-<span class="c-keyword">local</span> <span class="c-var">activationCode</span> <span class="c-operator">=</span> <span class="c-string" id="script1Code">"XXXX-XXXX-XXXX"</span>
-<span class="c-keyword">local</span> <span class="c-var">playerName</span> <span class="c-operator">=</span> <span class="c-string" id="script1Player">"Игрок"</span>
-
-<span class="c-keyword">local</span> <span class="c-function">function</span> <span class="c-function">checkActivation</span>(<span class="c-var">code</span>)
-    <span class="c-keyword">if</span> <span class="c-var">code</span> <span class="c-operator">==</span> <span class="c-var">activationCode</span> <span class="c-keyword">then</span>
-        <span class="c-function">print</span>(<span class="c-string">"✅ Активация успешна!"</span>)
-        <span class="c-function">print</span>(<span class="c-string">"👤 Разработчик: "</span> <span class="c-operator">..</span> <span class="c-var">playerName</span>)
-        <span class="c-function">print</span>(<span class="c-string">"🔑 Код принят: "</span> <span class="c-operator">..</span> <span class="c-var">code</span>)
-        <span class="c-keyword">return</span> <span class="c-keyword">true</span>
-    <span class="c-keyword">else</span>
-        <span class="c-function">warn</span>(<span class="c-string">"❌ Неверный код активации!"</span>)
-        <span class="c-keyword">return</span> <span class="c-keyword">false</span>
-    <span class="c-keyword">end</span>
-<span class="c-keyword">end</span>
-
-<span class="c-var">checkActivation</span>(<span class="c-var">activationCode</span>)</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('activation')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → ServerScriptService → Script</span>
-                </div>
-            </div>
-
-            <!-- Скрипт скорости -->
-            <div class="script-content" id="script-speed">
-                <div class="script-info">
-                    <p>Изменяет скорость игрока. Вставьте в <strong>StarterCharacterScripts</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">SpeedScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- ⚡ Скрипт изменения скорости</span>
-<span class="c-comment">-- Вставить в: StarterCharacterScripts</span>
-
-<span class="c-keyword">local</span> <span class="c-var">player</span> <span class="c-operator">=</span> <span class="c-property">game</span><span class="c-operator">.</span><span class="c-property">Players</span><span class="c-operator">.</span><span class="c-property">LocalPlayer</span>
-<span class="c-keyword">local</span> <span class="c-var">character</span> <span class="c-operator">=</span> <span class="c-var">player</span><span class="c-operator">.</span><span class="c-property">Character</span>
-<span class="c-keyword">local</span> <span class="c-var">humanoid</span> <span class="c-operator">=</span> <span class="c-var">character</span><span class="c-operator">:</span><span class="c-function">WaitForChild</span>(<span class="c-string">"Humanoid"</span>)
-
-<span class="c-comment">-- Установите скорость (обычная = 16)</span>
-<span class="c-keyword">local</span> <span class="c-var">SPEED</span> <span class="c-operator">=</span> <span class="c-number">30</span>
-
-<span class="c-var">humanoid</span><span class="c-operator">.</span><span class="c-property">WalkSpeed</span> <span class="c-operator">=</span> <span class="c-var">SPEED</span>
-
-<span class="c-function">print</span>(<span class="c-string">"⚡ Скорость установлена: "</span> <span class="c-operator">..</span> <span class="c-var">SPEED</span>)</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('speed')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → StarterPlayer → StarterCharacterScripts → LocalScript</span>
-                </div>
-            </div>
-
-            <!-- Скрипт прыжка -->
-            <div class="script-content" id="script-jump">
-                <div class="script-info">
-                    <p>Изменяет высоту прыжка игрока. Вставьте в <strong>StarterCharacterScripts</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">JumpScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- 🦘 Скрипт высоты прыжка</span>
-<span class="c-comment">-- Вставить в: StarterCharacterScripts</span>
-
-<span class="c-keyword">local</span> <span class="c-var">player</span> <span class="c-operator">=</span> <span class="c-property">game</span><span class="c-operator">.</span><span class="c-property">Players</span><span class="c-operator">.</span><span class="c-property">LocalPlayer</span>
-<span class="c-keyword">local</span> <span class="c-var">character</span> <span class="c-operator">=</span> <span class="c-var">player</span><span class="c-operator">.</span><span class="c-property">Character</span>
-<span class="c-keyword">local</span> <span class="c-var">humanoid</span> <span class="c-operator">=</span> <span class="c-var">character</span><span class="c-operator">:</span><span class="c-function">WaitForChild</span>(<span class="c-string">"Humanoid"</span>)
-
-<span class="c-comment">-- Высота прыжка (обычная = 7.2)</span>
-<span class="c-keyword">local</span> <span class="c-var">JUMP_HEIGHT</span> <span class="c-operator">=</span> <span class="c-number">50</span>
-
-<span class="c-var">humanoid</span><span class="c-operator">.</span><span class="c-property">JumpPower</span> <span class="c-operator">=</span> <span class="c-var">JUMP_HEIGHT</span>
-
-<span class="c-function">print</span>(<span class="c-string">"🦘 Высота прыжка: "</span> <span class="c-operator">..</span> <span class="c-var">JUMP_HEIGHT</span>)</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('jump')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → StarterPlayer → StarterCharacterScripts → LocalScript</span>
-                </div>
-            </div>
-
-            <!-- Скрипт GUI -->
-            <div class="script-content" id="script-gui">
-                <div class="script-info">
-                    <p>Создаёт простой экран приветствия. Вставьте в <strong>StarterGui</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">GUIScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- 🖥️ Скрипт создания GUI</span>
-<span class="c-comment">-- Вставить в: StarterGui → LocalScript</span>
-
-<span class="c-keyword">local</span> <span class="c-var">player</span> <span class="c-operator">=</span> <span class="c-property">game</span><span class="c-operator">.</span><span class="c-property">Players</span><span class="c-operator">.</span><span class="c-property">LocalPlayer</span>
-
-<span class="c-comment">-- Создаём ScreenGui</span>
-<span class="c-keyword">local</span> <span class="c-var">screenGui</span> <span class="c-operator">=</span> <span class="c-property">Instance</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-string">"ScreenGui"</span>)
-<span class="c-var">screenGui</span><span class="c-operator">.</span><span class="c-property">Parent</span> <span class="c-operator">=</span> <span class="c-var">player</span><span class="c-operator">.</span><span class="c-property">PlayerGui</span>
-
-<span class="c-comment">-- Создаём рамку</span>
-<span class="c-keyword">local</span> <span class="c-var">frame</span> <span class="c-operator">=</span> <span class="c-property">Instance</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-string">"Frame"</span>)
-<span class="c-var">frame</span><span class="c-operator">.</span><span class="c-property">Size</span> <span class="c-operator">=</span> <span class="c-property">UDim2</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-number">0</span>, <span class="c-number">300</span>, <span class="c-number">0</span>, <span class="c-number">100</span>)
-<span class="c-var">frame</span><span class="c-operator">.</span><span class="c-property">Position</span> <span class="c-operator">=</span> <span class="c-property">UDim2</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-number">0.5</span>, <span class="c-number">-150</span>, <span class="c-number">0</span>, <span class="c-number">20</span>)
-<span class="c-var">frame</span><span class="c-operator">.</span><span class="c-property">BackgroundColor3</span> <span class="c-operator">=</span> <span class="c-property">Color3</span><span class="c-operator">.</span><span class="c-function">fromRGB</span>(<span class="c-number">30</span>, <span class="c-number">30</span>, <span class="c-number">50</span>)
-<span class="c-var">frame</span><span class="c-operator">.</span><span class="c-property">Parent</span> <span class="c-operator">=</span> <span class="c-var">screenGui</span>
-
-<span class="c-comment">-- Текст приветствия</span>
-<span class="c-keyword">local</span> <span class="c-var">label</span> <span class="c-operator">=</span> <span class="c-property">Instance</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-string">"TextLabel"</span>)
-<span class="c-var">label</span><span class="c-operator">.</span><span class="c-property">Size</span> <span class="c-operator">=</span> <span class="c-property">UDim2</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-number">1</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-number">0</span>)
-<span class="c-var">label</span><span class="c-operator">.</span><span class="c-property">Text</span> <span class="c-operator">=</span> <span class="c-string">"👋 Привет, "</span> <span class="c-operator">..</span> <span class="c-var">player</span><span class="c-operator">.</span><span class="c-property">Name</span> <span class="c-operator">..</span> <span class="c-string">"!"</span>
-<span class="c-var">label</span><span class="c-operator">.</span><span class="c-property">TextColor3</span> <span class="c-operator">=</span> <span class="c-property">Color3</span><span class="c-operator">.</span><span class="c-function">fromRGB</span>(<span class="c-number">0</span>, <span class="c-number">162</span>, <span class="c-number">255</span>)
-<span class="c-var">label</span><span class="c-operator">.</span><span class="c-property">TextSize</span> <span class="c-operator">=</span> <span class="c-number">22</span>
-<span class="c-var">label</span><span class="c-operator">.</span><span class="c-property">BackgroundTransparency</span> <span class="c-operator">=</span> <span class="c-number">1</span>
-<span class="c-var">label</span><span class="c-operator">.</span><span class="c-property">Parent</span> <span class="c-operator">=</span> <span class="c-var">frame</span>
-
-<span class="c-comment">-- Скрыть через 5 секунд</span>
-<span class="c-property">task</span><span class="c-operator">.</span><span class="c-function">wait</span>(<span class="c-number">5</span>)
-<span class="c-var">screenGui</span><span class="c-operator">:</span><span class="c-function">Destroy</span>()</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('gui')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → StarterGui → LocalScript</span>
-                </div>
-            </div>
-
-            <!-- Скрипт телепорта -->
-            <div class="script-content" id="script-teleport">
-                <div class="script-info">
-                    <p>Телепортирует игрока на определённую позицию. Вставьте в <strong>StarterCharacterScripts</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">TeleportScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- 🌀 Скрипт телепортации</span>
-<span class="c-comment">-- Вставить в: StarterCharacterScripts</span>
-
-<span class="c-keyword">local</span> <span class="c-var">player</span> <span class="c-operator">=</span> <span class="c-property">game</span><span class="c-operator">.</span><span class="c-property">Players</span><span class="c-operator">.</span><span class="c-property">LocalPlayer</span>
-<span class="c-keyword">local</span> <span class="c-var">character</span> <span class="c-operator">=</span> <span class="c-var">player</span><span class="c-operator">.</span><span class="c-property">Character</span>
-<span class="c-keyword">local</span> <span class="c-var">rootPart</span> <span class="c-operator">=</span> <span class="c-var">character</span><span class="c-operator">:</span><span class="c-function">WaitForChild</span>(<span class="c-string">"HumanoidRootPart"</span>)
-
-<span class="c-comment">-- Координаты (X, Y, Z)</span>
-<span class="c-keyword">local</span> <span class="c-var">targetPosition</span> <span class="c-operator">=</span> <span class="c-property">Vector3</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-number">0</span>, <span class="c-number">10</span>, <span class="c-number">0</span>)
-
-<span class="c-comment">-- Ждём 2 секунды потом телепортируем</span>
-<span class="c-property">task</span><span class="c-operator">.</span><span class="c-function">wait</span>(<span class="c-number">2</span>)
-<span class="c-var">rootPart</span><span class="c-operator">.</span><span class="c-property">CFrame</span> <span class="c-operator">=</span> <span class="c-property">CFrame</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-var">targetPosition</span>)
-
-<span class="c-function">print</span>(<span class="c-string">"🌀 Телепортация выполнена!"</span>)</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('teleport')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → StarterPlayer → StarterCharacterScripts → LocalScript</span>
-                </div>
-            </div>
-
-            <!-- Скрипт очков -->
-            <div class="script-content" id="script-leaderstats">
-                <div class="script-info">
-                    <p>Создаёт таблицу очков (Leaderboard). Вставьте в <strong>ServerScriptService</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">LeaderstatsScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- 🏆 Скрипт таблицы очков</span>
-<span class="c-comment">-- Вставить в: ServerScriptService</span>
-
-<span class="c-property">game</span><span class="c-operator">.</span><span class="c-property">Players</span><span class="c-operator">.</span><span class="c-property">PlayerAdded</span><span class="c-operator">:</span><span class="c-function">Connect</span>(<span class="c-keyword">function</span>(<span class="c-var">player</span>)
-
-    <span class="c-comment">-- Создаём папку leaderstats</span>
-    <span class="c-keyword">local</span> <span class="c-var">leaderstats</span> <span class="c-operator">=</span> <span class="c-property">Instance</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-string">"Folder"</span>)
-    <span class="c-var">leaderstats</span><span class="c-operator">.</span><span class="c-property">Name</span> <span class="c-operator">=</span> <span class="c-string">"leaderstats"</span>
-    <span class="c-var">leaderstats</span><span class="c-operator">.</span><span class="c-property">Parent</span> <span class="c-operator">=</span> <span class="c-var">player</span>
-
-    <span class="c-comment">-- Монеты</span>
-    <span class="c-keyword">local</span> <span class="c-var">coins</span> <span class="c-operator">=</span> <span class="c-property">Instance</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-string">"IntValue"</span>)
-    <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Name</span> <span class="c-operator">=</span> <span class="c-string">"💰 Монеты"</span>
-    <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Value</span> <span class="c-operator">=</span> <span class="c-number">0</span>
-    <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Parent</span> <span class="c-operator">=</span> <span class="c-var">leaderstats</span>
-
-    <span class="c-comment">-- Уровень</span>
-    <span class="c-keyword">local</span> <span class="c-var">level</span> <span class="c-operator">=</span> <span class="c-property">Instance</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-string">"IntValue"</span>)
-    <span class="c-var">level</span><span class="c-operator">.</span><span class="c-property">Name</span> <span class="c-operator">=</span> <span class="c-string">"⭐ Уровень"</span>
-    <span class="c-var">level</span><span class="c-operator">.</span><span class="c-property">Value</span> <span class="c-operator">=</span> <span class="c-number">1</span>
-    <span class="c-var">level</span><span class="c-operator">.</span><span class="c-property">Parent</span> <span class="c-operator">=</span> <span class="c-var">leaderstats</span>
-
-    <span class="c-comment">-- Даём монеты каждые 10 сек</span>
-    <span class="c-keyword">while</span> <span class="c-keyword">true</span> <span class="c-keyword">do</span>
-        <span class="c-property">task</span><span class="c-operator">.</span><span class="c-function">wait</span>(<span class="c-number">10</span>)
-        <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Value</span> <span class="c-operator">=</span> <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Value</span> <span class="c-operator">+</span> <span class="c-number">5</span>
-    <span class="c-keyword">end</span>
-<span class="c-keyword">end</span>)</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('leaderstats')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → ServerScriptService → Script</span>
-                </div>
-            </div>
-
-            <!-- Скрипт двери -->
-            <div class="script-content" id="script-door">
-                <div class="script-info">
-                    <p>Открывает дверь когда игрок подходит. Вставьте скрипт внутрь <strong>Part (двери)</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">DoorScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- 🚪 Скрипт автоматической двери</span>
-<span class="c-comment">-- Вставить в: Part (дверь) → Script</span>
-
-<span class="c-keyword">local</span> <span class="c-var">door</span> <span class="c-operator">=</span> <span class="c-property">script</span><span class="c-operator">.</span><span class="c-property">Parent</span>
-<span class="c-keyword">local</span> <span class="c-var">isOpen</span> <span class="c-operator">=</span> <span class="c-keyword">false</span>
-<span class="c-keyword">local</span> <span class="c-var">debounce</span> <span class="c-operator">=</span> <span class="c-keyword">false</span>
-
-<span class="c-var">door</span><span class="c-operator">.</span><span class="c-property">Touched</span><span class="c-operator">:</span><span class="c-function">Connect</span>(<span class="c-keyword">function</span>(<span class="c-var">hit</span>)
-    <span class="c-keyword">if</span> <span class="c-var">debounce</span> <span class="c-keyword">then</span> <span class="c-keyword">return</span> <span class="c-keyword">end</span>
-    <span class="c-keyword">local</span> <span class="c-var">player</span> <span class="c-operator">=</span> <span class="c-property">game</span><span class="c-operator">.</span><span class="c-property">Players</span><span class="c-operator">:</span><span class="c-function">GetPlayerFromCharacter</span>(<span class="c-var">hit</span><span class="c-operator">.</span><span class="c-property">Parent</span>)
-    <span class="c-keyword">if</span> <span class="c-keyword">not</span> <span class="c-var">player</span> <span class="c-keyword">then</span> <span class="c-keyword">return</span> <span class="c-keyword">end</span>
-
-    <span class="c-var">debounce</span> <span class="c-operator">=</span> <span class="c-keyword">true</span>
-
-    <span class="c-comment">-- Открыть дверь</span>
-    <span class="c-var">door</span><span class="c-operator">.</span><span class="c-property">Transparency</span> <span class="c-operator">=</span> <span class="c-number">1</span>
-    <span class="c-var">door</span><span class="c-operator">.</span><span class="c-property">CanCollide</span> <span class="c-operator">=</span> <span class="c-keyword">false</span>
-    <span class="c-function">print</span>(<span class="c-string">"🚪 Дверь открылась!"</span>)
-
-    <span class="c-comment">-- Закрыть через 3 секунды</span>
-    <span class="c-property">task</span><span class="c-operator">.</span><span class="c-function">wait</span>(<span class="c-number">3</span>)
-    <span class="c-var">door</span><span class="c-operator">.</span><span class="c-property">Transparency</span> <span class="c-operator">=</span> <span class="c-number">0</span>
-    <span class="c-var">door</span><span class="c-operator">.</span><span class="c-property">CanCollide</span> <span class="c-operator">=</span> <span class="c-keyword">true</span>
-    <span class="c-function">print</span>(<span class="c-string">"🚪 Дверь закрылась!"</span>)
-
-    <span class="c-property">task</span><span class="c-operator">.</span><span class="c-function">wait</span>(<span class="c-number">1</span>)
-    <span class="c-var">debounce</span> <span class="c-operator">=</span> <span class="c-keyword">false</span>
-<span class="c-keyword">end</span>)</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('door')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → Workspace → Part (дверь) → Script</span>
-                </div>
-            </div>
-
-            <!-- Скрипт магазина -->
-            <div class="script-content" id="script-shop">
-                <div class="script-info">
-                    <p>Простой магазин с покупкой скорости за монеты. Вставьте в <strong>ServerScriptService</strong></p>
-                </div>
-                <div class="lua-box">
-                    <div class="lua-header">
-                        <div class="lua-dots">
-                            <div class="lua-dot dot-red"></div>
-                            <div class="lua-dot dot-yellow"></div>
-                            <div class="lua-dot dot-green"></div>
-                        </div>
-                        <span class="lua-title">ShopScript.lua</span>
-                    </div>
-                    <div class="lua-code"><span class="c-comment">-- 🛒 Скрипт магазина</span>
-<span class="c-comment">-- Вставить в: ServerScriptService</span>
-
-<span class="c-keyword">local</span> <span class="c-var">ReplicatedStorage</span> <span class="c-operator">=</span> <span class="c-property">game</span><span class="c-operator">:</span><span class="c-function">GetService</span>(<span class="c-string">"ReplicatedStorage"</span>)
-
-<span class="c-comment">-- Создаём Remote Event для магазина</span>
-<span class="c-keyword">local</span> <span class="c-var">buyEvent</span> <span class="c-operator">=</span> <span class="c-property">Instance</span><span class="c-operator">.</span><span class="c-function">new</span>(<span class="c-string">"RemoteEvent"</span>)
-<span class="c-var">buyEvent</span><span class="c-operator">.</span><span class="c-property">Name</span> <span class="c-operator">=</span> <span class="c-string">"BuyItem"</span>
-<span class="c-var">buyEvent</span><span class="c-operator">.</span><span class="c-property">Parent</span> <span class="c-operator">=</span> <span class="c-var">ReplicatedStorage</span>
-
-<span class="c-comment">-- Товары магазина</span>
-<span class="c-keyword">local</span> <span class="c-var">shop</span> <span class="c-operator">=</span> {
-    [<span class="c-string">"Скорость"</span>] <span class="c-operator">=</span> { <span class="c-property">price</span> <span class="c-operator">=</span> <span class="c-number">50</span>, <span class="c-property">speed</span> <span class="c-operator">=</span> <span class="c-number">30</span> },
-    [<span class="c-string">"Турбо"</span>]   <span class="c-operator">=</span> { <span class="c-property">price</span> <span class="c-operator">=</span> <span class="c-number">100</span>, <span class="c-property">speed</span> <span class="c-operator">=</span> <span class="c-number">50</span> }
-}
-
-<span class="c-comment">-- Обработка покупки</span>
-<span class="c-var">buyEvent</span><span class="c-operator">.</span><span class="c-property">OnServerEvent</span><span class="c-operator">:</span><span class="c-function">Connect</span>(<span class="c-keyword">function</span>(<span class="c-var">player</span>, <span class="c-var">item</span>)
-    <span class="c-keyword">local</span> <span class="c-var">stats</span> <span class="c-operator">=</span> <span class="c-var">player</span><span class="c-operator">:</span><span class="c-function">FindFirstChild</span>(<span class="c-string">"leaderstats"</span>)
-    <span class="c-keyword">if</span> <span class="c-keyword">not</span> <span class="c-var">stats</span> <span class="c-keyword">then</span> <span class="c-keyword">return</span> <span class="c-keyword">end</span>
-
-    <span class="c-keyword">local</span> <span class="c-var">coins</span> <span class="c-operator">=</span> <span class="c-var">stats</span><span class="c-operator">:</span><span class="c-function">FindFirstChild</span>(<span class="c-string">"💰 Монеты"</span>)
-    <span class="c-keyword">local</span> <span class="c-var">product</span> <span class="c-operator">=</span> <span class="c-var">shop</span>[<span class="c-var">item</span>]
-
-    <span class="c-keyword">if</span> <span class="c-var">product</span> <span class="c-keyword">and</span> <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Value</span> <span class="c-operator">>=</span> <span class="c-var">product</span><span class="c-operator">.</span><span class="c-property">price</span> <span class="c-keyword">then</span>
-        <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Value</span> <span class="c-operator">=</span> <span class="c-var">coins</span><span class="c-operator">.</span><span class="c-property">Value</span> <span class="c-operator">-</span> <span class="c-var">product</span><span class="c-operator">.</span><span class="c-property">price</span>
-        <span class="c-keyword">local</span> <span class="c-var">char</span> <span class="c-operator">=</span> <span class="c-var">player</span><span class="c-operator">.</span><span class="c-property">Character</span>
-        <span class="c-keyword">if</span> <span class="c-var">char</span> <span class="c-keyword">then</span>
-            <span class="c-var">char</span><span class="c-operator">.</span><span class="c-property">Humanoid</span><span class="c-operator">.</span><span class="c-property">WalkSpeed</span> <span class="c-operator">=</span> <span class="c-var">product</span><span class="c-operator">.</span><span class="c-property">speed</span>
-        <span class="c-keyword">end</span>
-        <span class="c-function">print</span>(<span class="c-string">"🛒 Куплено: "</span> <span class="c-operator">..</span> <span class="c-var">item</span>)
-    <span class="c-keyword">else</span>
-        <span class="c-function">warn</span>(<span class="c-string">"❌ Недостаточно монет!"</span>)
-    <span class="c-keyword">end</span>
-<span class="c-keyword">end</span>)</div>
-                </div>
-                <button class="copy-script-btn" onclick="copyScript('shop')">📋 Скопировать скрипт</button>
-                <div class="where-to-place">
-                    <p>📁 Куда вставить:</p>
-                    <span>Explorer → ServerScriptService → Script</span>
-                </div>
-            </div>
-
-        </div>
-
-        <button class="new-code-btn" onclick="newCode()">🔄 Получить новый код</button>
+        
+        <button class="btn" onclick="location.reload()">НАЗАД</button>
     </div>
 </div>
 
 <script>
-    const names = [
-        'Ли', 'Ян', 'Лев', 'Макс', 'Иван', 'Петр', 'Анна', 'Мария', 'Ольга',
-        'Александр', 'Дмитрий', 'Сергей', 'Андрей', 'Михаил', 'Николай',
-        'Владимир', 'Екатерина', 'Наталья', 'Татьяна', 'Елена', 'Юрий',
-        'Артем', 'Кирилл', 'Денис', 'Павел', 'Роман', 'Виктор', 'Игорь'
-    ];
-
-    const usernameSelect = document.getElementById('username');
-    names.forEach(name => {
-        const opt = document.createElement('option');
-        opt.value = name;
-        opt.textContent = name;
-        usernameSelect.appendChild(opt);
+    const names = ['Ли', 'Ян', 'Лев', 'Макс', 'Иван', 'Петр', 'Анна', 'Мария', 'Ольга', 'Алекс'];
+    const sel = document.getElementById('firstName');
+    names.forEach(n => {
+        let o = document.createElement('option');
+        o.value = n; o.textContent = n; sel.appendChild(o);
     });
 
-    const badWords = ['дурак', 'идиот', 'тупой', 'глупый', 'плохой'];
-    let timerInterval;
-    let currentCode = '';
-    let currentPlayer = '';
-
-    function containsBadWords(text) {
-        return badWords.some(w => text.toLowerCase().includes(w));
-    }
-
-    function capitalize(text) {
-        return text ? text.charAt(0).toUpperCase() + text.slice(1).toLowerCase() : '';
-    }
-
-    document.getElementById('surname').addEventListener('input', function(e) {
-        const pos = e.target.selectionStart;
-        e.target.value = capitalize(e.target.value);
-        e.target.setSelectionRange(pos, pos);
-        validateField(e.target, 'surnameError');
-    });
-
-    document.getElementById('patronymic').addEventListener('input', function(e) {
-        const pos = e.target.selectionStart;
-        e.target.value = capitalize(e.target.value);
-        e.target.setSelectionRange(pos, pos);
-        validateField(e.target, 'patronymicError');
-    });
-
-    function validateField(field, errorId) {
-        const error = document.getElementById(errorId);
-        const value = field.value.trim();
-        if (value.length < 2 || value.length > 15) {
-            error.style.display = 'block';
-            field.style.borderColor = '#e74c3c';
-            return false;
-        }
-        if (containsBadWords(value)) {
-            error.textContent = 'Недопустимое слово';
-            error.style.display = 'block';
-            field.style.borderColor = '#e74c3c';
-            return false;
-        }
-        error.style.display = 'none';
-        field.style.borderColor = '#2ecc71';
-        return true;
-    }
-
-    function togglePassword() {
-        const f = document.getElementById('password');
-        f.type = f.type === 'password' ? 'text' : 'password';
-    }
-
-    function toggleConfirmPassword() {
-        const f = document.getElementById('confirmPassword');
-        f.type = f.type === 'password' ? 'text' : 'password';
-    }
-
-    document.getElementById('password').addEventListener('input', function(e) {
-        const password = e.target.value;
-        const bar = document.getElementById('strengthBar');
-        const text = document.getElementById('strengthText');
-        let strength = 0;
-        if (password.length >= 8) strength += 25;
-        if (password.length >= 12) strength += 25;
-        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 25;
-        if (/[0-9]/.test(password)) strength += 25;
-        bar.style.width = strength + '%';
-        const levels = [
-            { max: 25, color: '#e74c3c', text: 'Слабый' },
-            { max: 50, color: '#f39c12', text: 'Средний' },
-            { max: 75, color: '#3498db', text: 'Хороший' },
-            { max: 100, color: '#2ecc71', text: 'Отличный' }
-        ];
-        const level = levels.find(l => strength <= l.max);
-        bar.style.background = level.color;
-        text.textContent = level.text + ' пароль';
-        text.style.color = level.color;
-        const err = document.getElementById('passwordError');
-        if (password.length < 8 || password.length > 16) {
-            err.style.display = 'block';
-            e.target.style.borderColor = '#e74c3c';
-        } else {
-            err.style.display = 'none';
-            e.target.style.borderColor = '#2ecc71';
-        }
-    });
-
-    document.getElementById('confirmPassword').addEventListener('input', function(e) {
-        const match = document.getElementById('password').value === e.target.value;
-        document.getElementById('confirmError').style.display = match ? 'none' : 'block';
-        e.target.style.borderColor = match ? '#2ecc71' : '#e74c3c';
-    });
-
-    function generateCode() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        return Array.from({length: 3}, () =>
-            Array.from({length: 4}, () => chars[Math.floor(Math.random() * chars.length)]).join('')
-        ).join('-');
-    }
-
-    function startTimer() {
-        clearInterval(timerInterval);
-        let timeLeft = 900;
-        timerInterval = setInterval(() => {
-            const m = Math.floor(timeLeft / 60);
-            const s = timeLeft % 60;
-            document.getElementById('timerCount').textContent =
-                `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                document.getElementById('activationCode').textContent = 'ИСТЁК';
-            }
-            timeLeft--;
-        }, 1000);
-    }
-
-    function copyCode() {
-        navigator.clipboard.writeText(currentCode).then(() => {
-            const el = document.getElementById('copiedText');
-            el.style.display = 'block';
-            setTimeout(() => el.style.display = 'none', 2000);
+    // Функция автоматической большой буквы
+    function fixName(id) {
+        document.getElementById(id).addEventListener('input', function() {
+            this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase();
         });
     }
+    fixName('surname');
+    fixName('patronymic');
 
-    function newCode() {
-        currentCode = generateCode();
-        document.getElementById('activationCode').textContent = currentCode;
-        updateScriptCodes();
-        startTimer();
+    // ТОТ САМЫЙ АЛГОРИТМ (МАТЕМАТИКА)
+    function generateSecretCode(nick) {
+        const salt = 777;
+        let hash = 0;
+        for (let i = 0; i < nick.length; i++) {
+            hash = ((hash << 5) - hash) + nick.charCodeAt(i);
+            hash |= 0;
+        }
+        const finalNum = Math.abs(hash + salt);
+        const s = String(finalNum);
+        return `RBX-${s.slice(0,4)}-${s.slice(4,8) || '0912'}`;
     }
 
-    function updateScriptCodes() {
-        const el1 = document.getElementById('script1Code');
-        const el2 = document.getElementById('script1Player');
-        if (el1) el1.textContent = `"${currentCode}"`;
-        if (el2) el2.textContent = `"${currentPlayer}"`;
-    }
-
-    // Тексты скриптов для копирования
-    const scriptTexts = {
-        activation: () => `-- 🔑 Скрипт активации Roblox Studio
--- Вставить в: ServerScriptService
-
-local activationCode = "${currentCode}"
-local playerName = "${currentPlayer}"
-
-local function checkActivation(code)
-    if code == activationCode then
-        print("✅ Активация успешна!")
-        print("👤 Разработчик: " .. playerName)
-        print("🔑 Код принят: " .. code)
-        return true
-    else
-        warn("❌ Неверный код активации!")
-        return false
-    end
-end
-
-checkActivation(activationCode)`,
-
-        speed: () => `-- ⚡ Скрипт изменения скорости
--- Вставить в: StarterCharacterScripts
-
-local player = game.Players.LocalPlayer
-local character = player.Character
-local humanoid = character:WaitForChild("Humanoid")
-
-local SPEED = 30
-humanoid.WalkSpeed = SPEED
-print("⚡ Скорость установлена: " .. SPEED)`,
-
-        jump: () => `-- 🦘 Скрипт высоты прыжка
--- Вставить в: StarterCharacterScripts
-
-local player = game.Players.LocalPlayer
-local character = player.Character
-local humanoid = character:WaitForChild("Humanoid")
-
-local JUMP_HEIGHT = 50
-humanoid.JumpPower = JUMP_HEIGHT
-print("🦘 Высота прыжка: " .. JUMP_HEIGHT)`,
-
-        gui: () => `-- 🖥️ Скрипт создания GUI
--- Вставить в: StarterGui → LocalScript
-
-local player = game.Players.LocalPlayer
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = player.PlayerGui
-
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 100)
-frame.Position = UDim2.new(0.5, -150, 0, 20)
-frame.BackgroundColor3 = Color3.fromRGB(30, 30, 50)
-frame.Parent = screenGui
-
-local label = Instance.new("TextLabel")
-label.Size = UDim2.new(1, 0, 1, 0)
-label.Text = "👋 Привет, " .. player.Name .. "!"
-label.TextColor3 = Color3.fromRGB(0, 162, 255)
-label.TextSize = 22
-label.BackgroundTransparency = 1
-label.Parent = frame
-
-task.wait(5)
-screenGui:Destroy()`,
-
-        teleport: () => `-- 🌀 Скрипт телепортации
--- Вставить в: StarterCharacterScripts
-
-local player = game.Players.LocalPlayer
-local character = player.Character
-local rootPart = character:WaitForChild("HumanoidRootPart")
-
-local targetPosition = Vector3.new(0, 10, 0)
-
-task.wait(2)
-rootPart.CFrame = CFrame.new(targetPosition)
-print("🌀 Телепортация выполнена!")`,
-
-        leaderstats: () => `-- 🏆 Скрипт таблицы очков
--- Вставить в: ServerScriptService
-
-game.Players.PlayerAdded:Connect(function(player)
-    local leaderstats = Instance.new("Folder")
-    leaderstats.Name = "leaderstats"
-    leaderstats.Parent = player
-
-    local coins = Instance.new("IntValue")
-    coins.Name = "💰 Монеты"
-    coins.Value = 0
-    coins.Parent = leaderstats
-
-    local level = Instance.new("IntValue")
-    level.Name = "⭐ Уровень"
-    level.Value = 1
-    level.Parent = leaderstats
-
-    while true do
-        task.wait(10)
-        coins.Value = coins.Value + 5
-    end
-end)`,
-
-        door: () => `-- 🚪 Скрипт автоматической двери
--- Вставить в: Part (дверь) → Script
-
-local door = script.Parent
-local debounce = false
-
-door.Touched:Connect(function(hit)
-    if debounce then return end
-    local player = game.Players:GetPlayerFromCharacter(hit.Parent)
-    if not player then return end
-
-    debounce = true
-    door.Transparency = 1
-    door.CanCollide = false
-    print("🚪 Дверь открылась!")
-
-    task.wait(3)
-    door.Transparency = 0
-    door.CanCollide = true
-    print("🚪 Дверь закрылась!")
-
-    task.wait(1)
-    debounce = false
-end)`,
-
-        shop: () => `-- 🛒 Скрипт магазина
--- Вставить в: ServerScriptService
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local buyEvent = Instance.new("RemoteEvent")
-buyEvent.Name = "BuyItem"
-buyEvent.Parent = ReplicatedStorage
-
-local shop = {
-    ["Скорость"] = { price = 50, speed = 30 },
-    ["Турбо"]   = { price = 100, speed = 50 }
-}
-
-buyEvent.OnServerEvent:Connect(function(player, item)
-    local stats = player:FindFirstChild("leaderstats")
-    if not stats then return end
-
-    local coins = stats:FindFirstChild("💰 Монеты")
-    local product = shop[item]
-
-    if product and coins.Value >= product.price then
-        coins.Value = coins.Value - product.price
-        local char = player.Character
-        if char then
-            char.Humanoid.WalkSpeed = product.speed
-        end
-        print("🛒 Куплено: " .. item)
-    else
-        warn("❌ Недостаточно монет!")
-    end
-end)`
-    };
-
-    function copyScript(type) {
-        const text = scriptTexts[type]();
-        navigator.clipboard.writeText(text).then(() => {
-            const btns = document.querySelectorAll('.copy-script-btn');
-            const activeScript = document.querySelector(`#script-${type} .copy-script-btn`);
-            if (activeScript) {
-                activeScript.textContent = '✅ Скопировано!';
-                setTimeout(() => activeScript.textContent = '📋 Скопировать скрипт', 2000);
-            }
-        });
-    }
-
-    function switchScript(name) {
-        document.querySelectorAll('.script-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.script-content').forEach(t => t.classList.remove('active'));
-        document.getElementById('script-' + name).classList.add('active');
-        event.target.classList.add('active');
-    }
-
-    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+    document.getElementById('regForm').onsubmit = function(e) {
         e.preventDefault();
-
-        const username = document.getElementById('username').value;
-        const surname = document.getElementById('surname').value;
-        const patronymic = document.getElementById('patronymic').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        if (!username) { alert('Выберите имя из списка'); return; }
-        if (!validateField(document.getElementById('surname'), 'surnameError')) return;
-        if (!validateField(document.getElementById('patronymic'), 'patronymicError')) return;
-        if (password.length < 8 || password.length > 16) { alert('Пароль 8-16 символов'); return; }
-        if (password !== confirmPassword) { alert('Пароли не совпадают'); return; }
-
-        currentCode = generateCode();
-        currentPlayer = `${surname} ${username} ${patronymic}`;
-
-        document.getElementById('displayName').textContent = `👤 ${currentPlayer}`;
-        document.getElementById('activationCode').textContent = currentCode;
-        updateScriptCodes();
-
+        const nick = document.getElementById('robloxNick').value;
+        const code = generateSecretCode(nick);
+        
         document.getElementById('formSection').style.display = 'none';
         document.getElementById('activationScreen').style.display = 'block';
-
-        startTimer();
-    });
+        document.getElementById('resultCode').textContent = code;
+        document.getElementById('showNick').textContent = nick;
+    };
 </script>
+
 </body>
 </html>
