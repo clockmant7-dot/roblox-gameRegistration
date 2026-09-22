@@ -6,30 +6,19 @@
     <title>Roblox Регистрация</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px;
-        }
-        .container {
-            background: white; border-radius: 20px; padding: 30px; width: 100%; max-width: 450px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { background: white; border-radius: 20px; padding: 30px; width: 100%; max-width: 450px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
         .logo { text-align: center; margin-bottom: 20px; background: #0f3460; padding: 15px; border-radius: 12px; color: #00a2ff; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: 600; margin-bottom: 5px; color: #333; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 15px; outline: none; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; color: #333; font-size: 13px; }
+        .input-row { display: flex; gap: 5px; }
+        input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
         input:focus { border-color: #00a2ff; }
-        .btn {
-            width: 100%; padding: 12px; background: #00a2ff; color: white; border: none;
-            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;
-        }
-        .activation-screen { display: none; text-align: center; }
-        .code-box {
-            background: #1a1a2e; color: #00a2ff; padding: 20px; border-radius: 12px;
-            font-family: monospace; font-size: 28px; font-weight: bold; margin: 15px 0; border: 2px dashed #00a2ff;
-        }
-        .info { background: #e8f4ff; padding: 10px; border-radius: 8px; font-size: 13px; text-align: left; }
+        .rand-btn { background: #00a2ff; color: white; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 18px; transition: 0.2s; }
+        .rand-btn:hover { background: #0084d1; }
+        .btn { width: 100%; padding: 12px; background: #00a2ff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px;}
+        .code-box { background: #1a1a2e; color: #00a2ff; padding: 20px; border-radius: 12px; font-family: monospace; font-size: 28px; font-weight: bold; text-align: center; margin: 15px 0; border: 2px dashed #00a2ff; }
+        #activationScreen { display: none; }
     </style>
 </head>
 <body>
@@ -39,86 +28,76 @@
         <div class="logo"><h2>ROBLOX STUDIO</h2><p style="color:white; font-size:10px">REGISTRATION SYSTEM</p></div>
         <form id="regForm">
             <div class="form-group">
-                <label>Никнейм в Roblox (ОБЯЗАТЕЛЬНО ПРАВИЛЬНЫЙ) *</label>
-                <input type="text" id="robloxNick" placeholder="Например: Petya_2012" required>
+                <label>Никнейм в Roblox *</label>
+                <input type="text" id="robloxNick" placeholder="Точно как в игре" required>
             </div>
             <div class="form-group">
                 <label>Имя персонажа *</label>
-                <select id="firstName"></select>
+                <div class="input-row">
+                    <select id="firstName"></select>
+                    <button type="button" class="rand-btn" onclick="randSelect('firstName')">🎲</button>
+                </div>
             </div>
             <div class="form-group">
                 <label>Фамилия *</label>
-                <input type="text" id="surname" required>
+                <div class="input-row">
+                    <input type="text" id="surname" required>
+                    <button type="button" class="rand-btn" onclick="randInput('surname', surnamesList)">🎲</button>
+                </div>
             </div>
             <div class="form-group">
                 <label>Отчество *</label>
-                <input type="text" id="patronymic" required>
+                <div class="input-row">
+                    <input type="text" id="patronymic" required>
+                    <button type="button" class="rand-btn" onclick="randInput('patronymic', patronymicList)">🎲</button>
+                </div>
             </div>
             <div class="form-group">
                 <label>Пароль (8-16 символов) *</label>
                 <input type="password" id="pass" minlength="8" maxlength="16" required>
             </div>
-            <div class="form-group">
-                <label>Возраст</label>
-                <input type="text" value="10 лет" disabled style="background:#f0f0f0; text-align:center; font-weight:bold;">
-            </div>
             <button type="submit" class="btn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
         </form>
     </div>
 
-    <div class="activation-screen" id="activationScreen">
-        <h2 style="color: #00a2ff;">ГОТОВО!</h2>
-        <p style="font-size: 14px; margin-top: 10px;">Код для ника: <b id="userNick"></b></p>
-        <div class="code-box" id="displayCode">RBX-0000-0000</div>
-        <div class="info">
-            1. Откройте Roblox и зайдите в игру.<br>
-            2. Введите этот код в поле активации.<br>
-            3. Если не работает, проверьте ник!
-        </div>
-        <button class="btn" style="margin-top: 15px; background: #555;" onclick="location.reload()">НАЗАД</button>
+    <div id="activationScreen">
+        <h2 style="text-align:center; color:#00a2ff;">УСПЕШНО!</h2>
+        <div class="code-box" id="displayCode"></div>
+        <p style="font-size: 13px; text-align:center; margin-bottom:10px;"><b>Запомните ваши Имя, Фамилию, Отчество и Пароль!</b> Они понадобятся при входе в игру.</p>
+        <button class="btn" onclick="location.reload()">НАЗАД</button>
     </div>
 </div>
 
 <script>
-    // Список имен
-    const nameList = ['Ли', 'Ян', 'Лев', 'Макс', 'Иван', 'Петр', 'Анна', 'Мария', 'Ольга', 'Алекс', 'Дмитрий', 'Сергей'];
-    const select = document.getElementById('firstName');
-    nameList.forEach(n => {
-        let opt = document.createElement('option');
-        opt.value = n; opt.textContent = n; select.appendChild(opt);
-    });
+    // Списки данных
+    const names = ['Александр', 'Максим', 'Иван', 'Артем', 'Дмитрий', 'Никита', 'Михаил', 'Даниил', 'Егор', 'Андрей', 'Илья', 'Алексей', 'Роман', 'Сергей', 'Владислав', 'Ярослав', 'Тимофей', 'Евгений', 'Денис', 'Матвей', 'Павел', 'Антон', 'Кирилл', 'Виктор', 'Григорий', 'Анна', 'Мария', 'Елена', 'Дарья', 'Алина', 'Ирина', 'Екатерина', 'Анастасия', 'Наталья', 'Виктория', 'Ксения', 'Татьяна', 'Александра', 'Полина', 'София', 'Ольга', 'Валерия', 'Юлия', 'Маргарита', 'Алиса', 'Ева', 'Милана', 'Алена', 'Кристина', 'Диана'];
+    const surnamesList = ['Иванов', 'Смирнов', 'Кузнецов', 'Попов', 'Соколов', 'Лебедев', 'Козлов', 'Новиков', 'Морозов', 'Петров', 'Волков', 'Соловьев', 'Васильев', 'Зайцев', 'Павлов', 'Семенов', 'Голубев', 'Виноградов', 'Богданов', 'Воробьев', 'Федоров', 'Михайлов', 'Беляев', 'Тарасов', 'Белов'];
+    const patronymicList = ['Александрович', 'Иванович', 'Максимович', 'Сергеевич', 'Владимирович', 'Дмитриевич', 'Андреевич', 'Алексеевич', 'Михайлович', 'Николаевич', 'Юрьевич', 'Анатольевич', 'Викторович', 'Игоревич', 'Валерьевич', 'Александровна', 'Ивановна', 'Максимовна', 'Сергеевна', 'Владимировна', 'Дмитриевна', 'Андреевна', 'Алексеевна', 'Михайловна', 'Николаевна'];
 
-    // Авто-заглавные буквы
-    function autoCap(id) {
-        document.getElementById(id).addEventListener('input', function() {
-            if(this.value.length > 0) {
-                this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
-            }
-        });
+    const sel = document.getElementById('firstName');
+    names.forEach(n => { let opt = document.createElement('option'); opt.value = n; opt.textContent = n; sel.appendChild(opt); });
+
+    function autoCap(id) { document.getElementById(id).addEventListener('input', function() { if(this.value.length>0) this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1); }); }
+    autoCap('surname'); autoCap('patronymic');
+
+    function randInput(id, list) { document.getElementById(id).value = list[Math.floor(Math.random() * list.length)]; }
+    function randSelect(id) {
+        const s = document.getElementById(id);
+        s.selectedIndex = Math.floor(Math.random() * s.options.length);
     }
-    autoCap('surname');
-    autoCap('patronymic');
 
-    // НОВАЯ НАДЕЖНАЯ ФОРМУЛА
     function getCode(nick) {
-        nick = nick.toLowerCase().trim();
-        let sum = 0;
-        for (let i = 0; i < nick.length; i++) {
-            sum += nick.charCodeAt(i) * (i + 1);
-        }
-        // Создаем число на основе суммы
-        const codeNum = (sum * 777) + 12345;
-        const s = String(codeNum).padEnd(8, '0');
+        let sum = 0; nick = nick.toLowerCase().trim();
+        for (let i=0; i<nick.length; i++) sum += nick.charCodeAt(i) * (i + 1);
+        const s = String((sum * 777) + 12345).padEnd(8, '0');
         return `RBX-${s.slice(0,4)}-${s.slice(4,8)}`;
     }
 
     document.getElementById('regForm').onsubmit = function(e) {
         e.preventDefault();
-        const nick = document.getElementById('robloxNick').value;
         document.getElementById('formSection').style.display = 'none';
         document.getElementById('activationScreen').style.display = 'block';
-        document.getElementById('userNick').textContent = nick;
-        document.getElementById('displayCode').textContent = getCode(nick);
+        document.getElementById('displayCode').textContent = getCode(document.getElementById('robloxNick').value);
     };
 </script>
 </body>
