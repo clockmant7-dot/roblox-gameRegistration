@@ -297,30 +297,64 @@ document.getElementById('regForm').onsubmit = async function(e) {
 window.checkVerification = async function() {
     const btn = document.getElementById('checkVerifyBtn');
     const alertBox = document.getElementById('verifyAlert');
-    
+
     btn.innerHTML = '<span class="spinner"></span>ПРОВЕРКА...';
     btn.classList.add('loading');
     alertBox.style.display = 'none';
 
+    // Таймаут 10 секунд
+    const timeout = setTimeout(() => {
+        btn.innerHTML = '✅ Я подтвердил почту';
+        btn.classList.remove('loading');
+        alertBox.textContent = '⚠️ Превышено время ожидания! Попробуйте ещё раз.';
+        alertBox.style.display = 'block';
+    }, 10000);
+
     try {
         // Обновляем состояние пользователя
         await reload(auth.currentUser);
-        
-        if (auth.currentUser.emailVerified) {
-            // Почта подтверждена! Сохраняем в базу данных
-            const data = window._pendingUser;
-            await setDoc(doc(db, 'users', data.uid), data);
 
-            // Показываем успех и код
+        if (auth.currentUser.emailVerified) {
+            clearTimeout(timeout);
+
+            // Сохраняем в базу данных
+            const data = window._pendingUser;
+
+            await setDoc(doc(db, 'users', data.uid), {
+                nick: data.nick,
+                email: data.email,
+                name: data.name,
+                surname: data.surname,
+                patronymic: data.patronymic,
+                code: data.code,
+                registeredAt: data.registeredAt,
+                uid: data.uid
+            });
+
+            // Показываем успех
             document.getElementById('verifySection').style.display = 'none';
             document.getElementById('regSuccess').style.display = 'block';
             document.getElementById('regCode').textContent = data.code;
+
         } else {
-            alertBox.textContent = '⚠️ Почта ещё не подтверждена! Проверьте письмо и папку "Спам".';
+            clearTimeout(timeout);
+            alertBox.textContent = '⚠️ Почта ещё не подтверждена! Проверьте письмо и папку Спам.';
             alertBox.style.display = 'block';
         }
+
     } catch (error) {
-        alertBox.textContent = '❌ Ошибка проверки: ' + error.message;
+        clearTimeout(timeout);
+        console.error(error);
+
+        // Подробная ошибка
+        let msg = '❌ Ошибка: ' + error.message;
+        if (error.code === 'permission-denied') {
+            msg = '❌ Нет доступа к базе данных! Проверь правила Firestore.';
+        }
+        if (error.code === 'unavailable') {
+            msg = '❌ База данных недоступна! Проверь подключение к интернету.';
+        }
+        alertBox.textContent = msg;
         alertBox.style.display = 'block';
     }
 
