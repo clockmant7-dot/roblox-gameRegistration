@@ -30,9 +30,8 @@
         .alert { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; }
         .alert-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
         .alert-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-        .alert-warning { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
-        .code-box { background: #0f172a; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: monospace; font-size: 26px; font-weight: bold; text-align: center; margin: 15px 0; border: 2px dashed #38bdf8; cursor: pointer; transition: 0.2s; }
-        .code-box:hover { opacity: 0.8; }
+        .code-box { background: #0f172a; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: monospace; font-size: 26px; font-weight: bold; text-align: center; margin: 15px 0; border: 2px dashed #38bdf8; cursor: pointer; }
+        .code-box:hover { opacity: 0.85; }
         .user-card { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; margin-bottom: 10px; }
         .user-card h3 { color: #0f172a; font-size: 14px; margin-bottom: 5px; }
         .user-card p { color: #64748b; font-size: 12px; margin-bottom: 2px; }
@@ -56,7 +55,7 @@
         .verify-box p { color: #92400e; font-size: 13px; margin-bottom: 10px; }
         .search-box { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; font-size: 14px; outline: none; }
         .search-box:focus { border-color: #38bdf8; }
-        .no-users { text-align: center; color: #94a3b8; padding: 20px; }
+        .invite-input { letter-spacing: 8px; font-size: 20px; font-weight: bold; text-align: center; }
     </style>
 </head>
 <body>
@@ -66,7 +65,7 @@
         <p>СИСТЕМА АКТИВАЦИИ И АККАУНТОВ</p>
     </div>
 
-    <div class="tabs" id="mainTabs">
+    <div class="tabs">
         <button class="tab active" onclick="switchTab('register', this)">📝 Регистрация</button>
         <button class="tab" onclick="switchTab('login', this)">🔑 Вход</button>
         <button class="tab" onclick="switchTab('users', this)">👥 Игроки</button>
@@ -75,6 +74,10 @@
     <!-- РЕГИСТРАЦИЯ -->
     <div class="section active" id="register">
         <form id="regForm">
+            <div class="form-group">
+                <label>КОД ПРИГЛАШЕНИЯ (4 цифры) *</label>
+                <input type="text" id="inviteCode" class="invite-input" placeholder="0000" maxlength="4" required>
+            </div>
             <div class="form-group">
                 <label>НИКНЕЙМ В ROBLOX *</label>
                 <input type="text" id="robloxNick" placeholder="Точно как в игре" required>
@@ -113,6 +116,10 @@
                 <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
                 <p id="strengthText" style="font-size:11px; margin-top:3px; color:#64748b;"></p>
             </div>
+            <div class="form-group">
+                <label>ВОЗРАСТ</label>
+                <input type="text" value="10 лет" disabled style="background:#f1f5f9; text-align:center; font-weight:bold; color:#64748b;">
+            </div>
             <div id="regAlert" class="alert alert-error"></div>
             <button type="submit" class="btn btn-primary" id="regBtn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
         </form>
@@ -120,27 +127,24 @@
         <!-- Подтверждение почты -->
         <div id="verifySection" style="display:none;">
             <div class="verify-box">
-                <p>📧 Письмо отправлено на вашу почту!<br>Подтвердите email и нажмите кнопку ниже.</p>
+                <p>📧 Письмо отправлено!<br>Подтвердите email и нажмите кнопку ниже.</p>
                 <button class="btn btn-warning" id="checkVerifyBtn" onclick="checkVerification()">
                     ✅ Я подтвердил почту
                 </button>
                 <button class="btn btn-secondary" style="margin-top:8px;" onclick="resendEmail()">
-                    🔄 Отправить письмо снова
+                    🔄 Отправить снова
                 </button>
             </div>
             <div id="verifyAlert" class="alert alert-error"></div>
         </div>
 
-        <!-- После успешной регистрации -->
+        <!-- Успех -->
         <div id="regSuccess" style="display:none; text-align:center;">
             <p style="color:#16a34a; font-weight:bold; font-size:16px; margin-bottom:5px;">🎉 Регистрация успешна!</p>
-            <p style="font-size:13px; color:#64748b; margin-bottom:5px;">Ваш код активации:</p>
+            <p style="font-size:13px; color:#64748b;">Ваш код активации для Roblox:</p>
             <div class="code-box" id="regCode" onclick="copyCode('regCode')" title="Нажмите чтобы скопировать"></div>
             <p style="font-size:11px; color:#94a3b8; margin-bottom:15px;">👆 Нажмите на код чтобы скопировать</p>
-            <p style="font-size:12px; color:#64748b; background:#f1f5f9; padding:10px; border-radius:8px;">
-                📧 Код также отправлен на вашу почту
-            </p>
-            <button class="btn btn-secondary" onclick="resetReg()" style="margin-top:15px;">← НАЗАД</button>
+            <button class="btn btn-secondary" onclick="resetReg()">← НАЗАД</button>
         </div>
     </div>
 
@@ -172,11 +176,11 @@
                 <p id="profileEmail"></p>
                 <p id="profileDate"></p>
             </div>
-            <p style="font-size:13px; color:#475569; margin-bottom:5px; font-weight:600;">🔑 Ваш код активации:</p>
+            <p style="font-size:13px; color:#475569; margin-bottom:5px; font-weight:600;">🔑 Код активации для Roblox:</p>
             <div class="code-box" id="loginCode" onclick="copyCode('loginCode')" title="Нажмите чтобы скопировать"></div>
             <p style="font-size:11px; color:#94a3b8; margin-bottom:10px; text-align:center;">👆 Нажмите на код чтобы скопировать</p>
             <button class="btn btn-warning" onclick="quickSwitch()">🔄 Быстрая смена аккаунта</button>
-            <button class="btn btn-danger" onclick="logout()">🚪 Выйти из аккаунта</button>
+            <button class="btn btn-danger" onclick="logout()">🚪 Выйти</button>
         </div>
     </div>
 
@@ -194,7 +198,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, sendPasswordResetEmail, reload } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // ✅ ТВОЙ FIREBASE КОНФИГ
 const firebaseConfig = {
@@ -210,12 +214,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
-// Сохраняем в window чтобы использовать везде
 window._auth = auth;
 window._db = db;
 
-// Генерация кода
+// Генерация кода активации
 function getCode(nick) {
     let sum = 0;
     nick = nick.toLowerCase().trim();
@@ -225,7 +227,6 @@ function getCode(nick) {
 }
 window.getCode = getCode;
 
-// Список всех пользователей (для поиска)
 window.allUsers = [];
 
 // РЕГИСТРАЦИЯ
@@ -233,9 +234,10 @@ document.getElementById('regForm').onsubmit = async function(e) {
     e.preventDefault();
     const btn = document.getElementById('regBtn');
     const alertBox = document.getElementById('regAlert');
-    
+
+    const inviteCode = document.getElementById('inviteCode').value.trim();
     const nick = document.getElementById('robloxNick').value.trim();
-    const email = document.getElementById('email').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
     const name = document.getElementById('firstName').value;
     const surname = document.getElementById('surname').value.trim();
     const patronymic = document.getElementById('patronymic').value.trim();
@@ -246,44 +248,60 @@ document.getElementById('regForm').onsubmit = async function(e) {
     alertBox.style.display = 'none';
 
     try {
-        // Проверка уникальности ника
-        const nickSnap = await getDocs(query(collection(db, 'users'), where('nick', '==', nick)));
-        if (!nickSnap.empty) {
-            throw new Error('❌ Этот никнейм уже зарегистрирован! Каждый ник уникален.');
+        // Проверяем код приглашения
+        const inviteSnap = await getDocs(query(
+            collection(db, 'invites'),
+            where('code', '==', inviteCode),
+            where('email', '==', email),
+            where('used', '==', false)
+        ));
+
+        if (inviteSnap.empty) {
+            throw new Error('❌ Неверный код приглашения или email не совпадает!');
         }
 
-        // Проверка уникальности ФИО
-        const nameSnap = await getDocs(query(collection(db, 'users'),
+        const inviteDoc = inviteSnap.docs[0];
+
+        // Проверяем уникальность ника
+        const nickSnap = await getDocs(query(
+            collection(db, 'users'),
+            where('nick', '==', nick)
+        ));
+        if (!nickSnap.empty) {
+            throw new Error('❌ Этот никнейм уже зарегистрирован!');
+        }
+
+        // Проверяем уникальность ФИО
+        const nameSnap = await getDocs(query(
+            collection(db, 'users'),
             where('name', '==', name),
             where('surname', '==', surname),
             where('patronymic', '==', patronymic)
         ));
         if (!nameSnap.empty) {
-            throw new Error('❌ Игрок с таким ФИО уже существует! Измените хотя бы отчество.');
+            throw new Error('❌ Такое ФИО уже существует! Измените отчество.');
         }
 
         // Создаём аккаунт
         const userCred = await createUserWithEmailAndPassword(auth, email, pass);
-        
-        // Отправляем письмо с подтверждением
         await sendEmailVerification(userCred.user);
 
-        // Сохраняем временные данные
+        // Временно сохраняем данные
         window._pendingUser = {
             uid: userCred.user.uid,
             nick, email, name, surname, patronymic,
             code: getCode(nick),
-            registeredAt: new Date().toLocaleDateString('ru-RU')
+            registeredAt: new Date().toLocaleDateString('ru-RU'),
+            inviteDocId: inviteDoc.id
         };
 
-        // Показываем раздел подтверждения
         document.getElementById('regForm').style.display = 'none';
         document.getElementById('verifySection').style.display = 'block';
 
     } catch (error) {
         let msg = error.message || 'Неизвестная ошибка';
         if (msg.includes('email-already-in-use')) msg = '❌ Этот email уже используется!';
-        if (msg.includes('weak-password')) msg = '❌ Пароль слишком простой! Минимум 6 символов.';
+        if (msg.includes('weak-password')) msg = '❌ Пароль слишком простой!';
         if (msg.includes('invalid-email')) msg = '❌ Неверный формат email!';
         alertBox.textContent = msg;
         alertBox.style.display = 'block';
@@ -293,7 +311,7 @@ document.getElementById('regForm').onsubmit = async function(e) {
     btn.classList.remove('loading');
 };
 
-// ПРОВЕРКА ПОДТВЕРЖДЕНИЯ ПОЧТЫ
+// ПРОВЕРКА ПОЧТЫ
 window.checkVerification = async function() {
     const btn = document.getElementById('checkVerifyBtn');
     const alertBox = document.getElementById('verifyAlert');
@@ -302,24 +320,21 @@ window.checkVerification = async function() {
     btn.classList.add('loading');
     alertBox.style.display = 'none';
 
-    // Таймаут 10 секунд
     const timeout = setTimeout(() => {
         btn.innerHTML = '✅ Я подтвердил почту';
         btn.classList.remove('loading');
-        alertBox.textContent = '⚠️ Превышено время ожидания! Попробуйте ещё раз.';
+        alertBox.textContent = '⚠️ Превышено время! Попробуйте снова.';
         alertBox.style.display = 'block';
     }, 10000);
 
     try {
-        // Обновляем состояние пользователя
         await reload(auth.currentUser);
 
         if (auth.currentUser.emailVerified) {
             clearTimeout(timeout);
-
-            // Сохраняем в базу данных
             const data = window._pendingUser;
 
+            // Сохраняем пользователя в базу
             await setDoc(doc(db, 'users', data.uid), {
                 nick: data.nick,
                 email: data.email,
@@ -331,29 +346,26 @@ window.checkVerification = async function() {
                 uid: data.uid
             });
 
-            // Показываем успех
+            // Помечаем приглашение как использованное
+            await updateDoc(doc(db, 'invites', data.inviteDocId), {
+                used: true,
+                usedBy: data.nick,
+                usedAt: new Date().toLocaleDateString('ru-RU')
+            });
+
             document.getElementById('verifySection').style.display = 'none';
             document.getElementById('regSuccess').style.display = 'block';
             document.getElementById('regCode').textContent = data.code;
 
         } else {
             clearTimeout(timeout);
-            alertBox.textContent = '⚠️ Почта ещё не подтверждена! Проверьте письмо и папку Спам.';
+            alertBox.textContent = '⚠️ Почта не подтверждена! Проверьте письмо и папку Спам.';
             alertBox.style.display = 'block';
         }
-
     } catch (error) {
         clearTimeout(timeout);
-        console.error(error);
-
-        // Подробная ошибка
         let msg = '❌ Ошибка: ' + error.message;
-        if (error.code === 'permission-denied') {
-            msg = '❌ Нет доступа к базе данных! Проверь правила Firestore.';
-        }
-        if (error.code === 'unavailable') {
-            msg = '❌ База данных недоступна! Проверь подключение к интернету.';
-        }
+        if (error.code === 'permission-denied') msg = '❌ Нет доступа! Проверь правила Firestore.';
         alertBox.textContent = msg;
         alertBox.style.display = 'block';
     }
@@ -362,11 +374,11 @@ window.checkVerification = async function() {
     btn.classList.remove('loading');
 };
 
-// ПОВТОРНАЯ ОТПРАВКА ПИСЬМА
+// ПОВТОРНАЯ ОТПРАВКА
 window.resendEmail = async function() {
     try {
         await sendEmailVerification(auth.currentUser);
-        alert('📧 Письмо отправлено повторно! Проверьте почту.');
+        alert('📧 Письмо отправлено повторно!');
     } catch (error) {
         alert('❌ Ошибка: ' + error.message);
     }
@@ -387,10 +399,9 @@ document.getElementById('loginForm').onsubmit = async function(e) {
     try {
         const userCred = await signInWithEmailAndPassword(auth, email, pass);
 
-        // Проверяем подтверждена ли почта
         if (!userCred.user.emailVerified) {
             await signOut(auth);
-            throw new Error('⚠️ Сначала подтвердите вашу почту! Проверьте письмо.');
+            throw new Error('⚠️ Сначала подтвердите почту!');
         }
 
         const userData = await getDoc(doc(db, 'users', userCred.user.uid));
@@ -402,16 +413,16 @@ document.getElementById('loginForm').onsubmit = async function(e) {
             document.getElementById('profileNick').textContent = '🎮 Ник: ' + d.nick;
             document.getElementById('profileFullName').textContent = '👤 ' + d.surname + ' ' + d.name + ' ' + d.patronymic;
             document.getElementById('profileEmail').textContent = '📧 ' + d.email;
-            document.getElementById('profileDate').textContent = '📅 Дата: ' + d.registeredAt;
+            document.getElementById('profileDate').textContent = '📅 ' + d.registeredAt;
             document.getElementById('loginCode').textContent = d.code;
             localStorage.setItem('lastEmail', email);
         }
     } catch (error) {
         let msg = error.message;
-        if (msg.includes('user-not-found') || msg.includes('wrong-password') || msg.includes('invalid-credential')) {
+        if (msg.includes('invalid-credential') || msg.includes('wrong-password') || msg.includes('user-not-found')) {
             msg = '❌ Неверный email или пароль!';
         }
-        if (msg.includes('too-many-requests')) msg = '❌ Слишком много попыток! Подождите немного.';
+        if (msg.includes('too-many-requests')) msg = '❌ Слишком много попыток! Подождите.';
         alertBox.textContent = msg;
         alertBox.style.display = 'block';
     }
@@ -430,7 +441,7 @@ window.logout = async function() {
     document.getElementById('loginAlert').style.display = 'none';
 };
 
-// БЫСТРАЯ СМЕНА АККАУНТА
+// БЫСТРАЯ СМЕНА
 window.quickSwitch = async function() {
     await signOut(auth);
     document.getElementById('loginForm').style.display = 'block';
@@ -444,15 +455,12 @@ window.quickSwitch = async function() {
 // ЗАБЫЛ ПАРОЛЬ
 window.forgotPassword = async function() {
     const email = document.getElementById('loginEmail').value.trim();
-    if (!email) {
-        alert('Введите email в поле выше!');
-        return;
-    }
+    if (!email) { alert('Введите email выше!'); return; }
     try {
         await sendPasswordResetEmail(auth, email);
-        alert('📧 Письмо для сброса пароля отправлено на ' + email);
+        alert('📧 Письмо для сброса пароля отправлено!');
     } catch (error) {
-        alert('❌ Ошибка: ' + error.message);
+        alert('❌ ' + error.message);
     }
 };
 
@@ -460,25 +468,22 @@ window.forgotPassword = async function() {
 window.loadUsers = async function() {
     const list = document.getElementById('usersList');
     const count = document.getElementById('usersCount');
-    list.innerHTML = '<p class="no-users">Загрузка...</p>';
-
+    list.innerHTML = '<p style="text-align:center; color:#94a3b8; padding:20px;">Загрузка...</p>';
     try {
         const snap = await getDocs(collection(db, 'users'));
         count.textContent = snap.size;
         window.allUsers = [];
-
         snap.forEach(d => window.allUsers.push(d.data()));
         renderUsers(window.allUsers);
     } catch (error) {
-        list.innerHTML = '<p class="no-users">❌ Ошибка загрузки</p>';
+        list.innerHTML = '<p style="text-align:center; color:#ef4444;">❌ Ошибка загрузки</p>';
     }
 };
 
-// ОТОБРАЖЕНИЕ ИГРОКОВ
 window.renderUsers = function(users) {
     const list = document.getElementById('usersList');
     if (users.length === 0) {
-        list.innerHTML = '<p class="no-users">Игроков не найдено</p>';
+        list.innerHTML = '<p style="text-align:center; color:#94a3b8; padding:20px;">Игроков нет</p>';
         return;
     }
     list.innerHTML = users.map(d => `
@@ -486,12 +491,11 @@ window.renderUsers = function(users) {
             <h3>🎮 ${d.nick} <span class="badge">✅ Активен</span></h3>
             <p>👤 ${d.surname} ${d.name} ${d.patronymic}</p>
             <p>📧 ${d.email}</p>
-            <p>📅 Зарегистрирован: ${d.registeredAt}</p>
+            <p>📅 ${d.registeredAt}</p>
         </div>
     `).join('');
 };
 
-// ПОИСК ИГРОКОВ
 window.filterUsers = function() {
     const q = document.getElementById('searchBox').value.toLowerCase();
     const filtered = window.allUsers.filter(u =>
@@ -502,7 +506,6 @@ window.filterUsers = function() {
     renderUsers(filtered);
 };
 
-// КОПИРОВАНИЕ КОДА
 window.copyCode = function(id) {
     const code = document.getElementById(id).textContent;
     navigator.clipboard.writeText(code).then(() => {
@@ -512,23 +515,19 @@ window.copyCode = function(id) {
         setTimeout(() => el.textContent = old, 1500);
     });
 };
-
 </script>
 
 <script>
-// Списки
 const namesList = ['Александр','Максим','Иван','Артем','Дмитрий','Никита','Михаил','Даниил','Егор','Андрей','Илья','Алексей','Роман','Сергей','Владислав','Ярослав','Тимофей','Евгений','Денис','Матвей','Павел','Антон','Кирилл','Виктор','Григорий','Анна','Мария','Елена','Дарья','Алина','Ирина','Екатерина','Анастасия','Наталья','Виктория','Ксения','Татьяна','Александра','Полина','София','Ольга','Валерия','Юлия','Маргарита','Алиса','Ева','Милана','Алена','Кристина','Диана','Богдан','Глеб','Дамир','Марк','Мирон','Макар','Руслан','Степан','Федор','Василиса','Вероника','Злата','Кира','Лилия','Мирослава','Яна','Лев','Ян','Ли'];
 const surnamesList = ['Иванов','Иванова','Смирнов','Смирнова','Кузнецов','Кузнецова','Попов','Попова','Васильев','Васильева','Петров','Петрова','Соколов','Соколова','Михайлов','Михайлова','Новиков','Новикова','Федоров','Федорова','Морозов','Морозова','Волков','Волкова','Алексеев','Алексеева','Лебедев','Лебедева','Семенов','Семенова','Павлов','Павлова','Козлов','Козлова','Степанов','Степанова','Орлов','Орлова','Макаров','Макарова','Никитин','Никитина','Захаров','Захарова'];
 const patronymicsList = ['Александрович','Александровна','Иванович','Ивановна','Максимович','Максимовна','Сергеевич','Сергеевна','Дмитриевич','Дмитриевна','Андреевич','Андреевна','Алексеевич','Алексеевна','Михайлович','Михайловна','Евгеньевич','Евгеньевна','Владимирович','Владимировна','Николаевич','Николаевна','Романович','Романовна','Егорович','Егоровна','Денисович','Денисовна','Артемович','Артемовна','Викторович','Викторовна','Игоревич','Игоревна','Павлович','Павловна','Юрьевич','Юрьевна','Анатольевич','Анатольевна'];
 
-// Заполнение списка имён
 const sel = document.getElementById('firstName');
 namesList.forEach(n => {
     let o = document.createElement('option');
     o.value = n; o.textContent = n; sel.appendChild(o);
 });
 
-// Переключение вкладок
 function switchTab(tab, el) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -537,13 +536,11 @@ function switchTab(tab, el) {
     if (tab === 'users') window.loadUsers();
 }
 
-// Показать/скрыть пароль
 function togglePass(id) {
     const el = document.getElementById(id);
     el.type = el.type === 'password' ? 'text' : 'password';
 }
 
-// Авто заглавная буква
 function autoCapitalize(id) {
     document.getElementById(id).addEventListener('input', function() {
         if (this.value.length > 0) this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
@@ -552,7 +549,6 @@ function autoCapitalize(id) {
 autoCapitalize('surname');
 autoCapitalize('patronymic');
 
-// Рандомные поля
 function randInput(id, list) {
     document.getElementById(id).value = list[Math.floor(Math.random() * list.length)];
 }
@@ -561,7 +557,6 @@ function randSelect(id) {
     s.selectedIndex = Math.floor(Math.random() * s.options.length);
 }
 
-// Сила пароля
 document.getElementById('regPass').addEventListener('input', function() {
     const p = this.value;
     let strength = 0;
@@ -577,13 +572,19 @@ document.getElementById('regPass').addEventListener('input', function() {
     document.getElementById('strengthText').textContent = texts[strength-1] || '';
 });
 
-// Сброс регистрации
 function resetReg() {
     document.getElementById('regForm').style.display = 'block';
     document.getElementById('regSuccess').style.display = 'none';
     document.getElementById('verifySection').style.display = 'none';
     document.getElementById('regForm').reset();
+    document.getElementById('strengthFill').style.width = '0%';
+    document.getElementById('strengthText').textContent = '';
 }
+
+// Только цифры в поле кода
+document.getElementById('inviteCode').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '');
+});
 </script>
 </body>
 </html>
