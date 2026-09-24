@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: white; border-radius: 20px; padding: 30px; width: 100%; max-width: 550px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .logo { text-align: center; background: #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .logo h2 { color: #f59e0b; font-size: 22px; }
+        .logo p { color: #94a3b8; font-size: 11px; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-weight: 600; font-size: 12px; color: #475569; margin-bottom: 5px; }
+        input { width: 100%; padding: 10px 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; }
+        input:focus { border-color: #f59e0b; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 5px; }
+        .btn-admin { background: #f59e0b; color: white; }
+        .btn-admin:hover { background: #d97706; }
+        .btn-danger { background: #ef4444; color: white; margin-top: 8px; }
+        .invite-card { background: #fffbeb; border: 2px solid #fbbf24; border-radius: 12px; padding: 15px; margin-bottom: 10px; }
+        .invite-card h3 { color: #92400e; font-size: 14px; margin-bottom: 5px; }
+        .invite-card p { color: #78350f; font-size: 12px; margin-bottom: 3px; }
+        .code-badge { display: inline-block; background: #1e293b; color: #f59e0b; padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 22px; font-weight: bold; letter-spacing: 4px; margin: 5px 0; }
+        .status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-left: 5px; }
+        .status-waiting { background: #fef3c7; color: #d97706; }
+        .status-used { background: #d1fae5; color: #065f46; }
+        .alert { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; }
+        .alert-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+        .alert-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .count-box { background: #1e293b; color: #f59e0b; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        .count-box h2 { font-size: 36px; }
+        .count-box p { color: #94a3b8; font-size: 12px; }
+        .admin-login { display: block; }
+        .admin-panel { display: none; }
+        .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid white; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .copy-btn { background: #475569; color: white; border: none; border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; margin-left: 8px; }
+        .copy-btn:hover { background: #334155; }
+        .search { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; font-size: 14px; outline: none; }
+        .search:focus { border-color: #f59e0b; }
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #f1f5f9; padding: 5px; border-radius: 10px; }
+        .tab { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 12px; background: transparent; color: #64748b; }
+        .tab.active { background: white; color: #0f172a; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ВХОД В АДМИНКУ -->
+    <div class="admin-login" id="adminLogin">
+        <div class="logo">
+            <h2>🔐 АДМИН ПАНЕЛЬ</h2>
+            <p>ТОЛЬКО ДЛЯ АДМИНИСТРАТОРА</p>
+        </div>
+        <div class="form-group">
+            <label>СЕКРЕТНЫЙ ПАРОЛЬ АДМИНА</label>
+            <input type="password" id="adminPass" placeholder="Введите пароль">
+        </div>
+        <div id="loginAlert" class="alert alert-error"></div>
+        <button class="btn btn-admin" onclick="adminLogin()">ВОЙТИ</button>
+    </div>
+
+    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="logo">
+            <h2>⚙️ УПРАВЛЕНИЕ ИГРОКАМИ</h2>
+            <p>ROBLOX ACTIVATION SYSTEM</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('add', this)">➕ Добавить</button>
+            <button class="tab" onclick="switchTab('list', this)">📋 Список</button>
+        </div>
+
+        <!-- ДОБАВИТЬ ИГРОКА -->
+        <div class="section active" id="add">
+            <div class="form-group">
+                <label>EMAIL ИГРОКА</label>
+                <input type="email" id="newEmail" placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+                <label>НИКНЕЙМ ИГРОКА (необязательно)</label>
+                <input type="text" id="newNick" placeholder="Для заметки">
+            </div>
+            <div id="addAlert" class="alert alert-error"></div>
+            <button class="btn btn-admin" id="addBtn" onclick="addInvite()">
+                СГЕНЕРИРОВАТЬ КОД И ДОБАВИТЬ
+            </button>
+
+            <!-- Результат -->
+            <div id="addResult" style="display:none; margin-top:15px; text-align:center;">
+                <p style="font-weight:bold; color:#92400e; margin-bottom:8px;">
+                    📧 Отправьте этот код игроку в ЛС:
+                </p>
+                <div class="code-badge" id="generatedCode"></div>
+                <button class="copy-btn" style="display:block; margin:10px auto; padding:8px 20px; font-size:13px;" onclick="copyInviteCode()">
+                    📋 Скопировать код
+                </button>
+                <p style="font-size:12px; color:#64748b;" id="addedEmail"></p>
+            </div>
+        </div>
+
+        <!-- СПИСОК ИГРОКОВ -->
+        <div class="section" id="list">
+            <div class="count-box">
+                <h2 id="totalCount">—</h2>
+                <p>Всего приглашений выдано</p>
+            </div>
+            <input type="text" class="search" id="searchInvite" placeholder="🔍 Поиск по email или нику..." oninput="filterInvites()">
+            <div id="inviteList"></div>
+        </div>
+
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCp4fjKxY3PO-wyW-hPcb2Smzy36j0W6X8",
+    authDomain: "roblox-registration.firebaseapp.com",
+    projectId: "roblox-registration",
+    storageBucket: "roblox-registration.firebasestorage.app",
+    messagingSenderId: "1073755164080",
+    appId: "1:1073755164080:web:ebd817f94dbd1166491a75",
+    measurementId: "G-LFW87CNQ09"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+window._db = db;
+
+// Генерация 4-значного кода
+function generateInviteCode() {
+    return String(Math.floor(1000 + Math.random() * 9000));
+}
+window.generateInviteCode = generateInviteCode;
+
+// Все приглашения
+window.allInvites = [];
+
+// ДОБАВИТЬ ПРИГЛАШЕНИЕ
+window.addInvite = async function() {
+    const btn = document.getElementById('addBtn');
+    const alertBox = document.getElementById('addAlert');
+    const email = document.getElementById('newEmail').value.trim().toLowerCase();
+    const nick = document.getElementById('newNick').value.trim();
+
+    alertBox.style.display = 'none';
+    document.getElementById('addResult').style.display = 'none';
+
+    if (!email) {
+        alertBox.textContent = '❌ Введите email игрока!';
+        alertBox.style.display = 'block';
+        return;
+    }
+
+    btn.innerHTML = '<span class="spinner"></span>ГЕНЕРАЦИЯ...';
+    btn.disabled = true;
+
+    try {
+        // Проверяем не добавлен ли уже этот email
+        const existing = await getDocs(query(
+            collection(db, 'invites'),
+            where('email', '==', email)
+        ));
+
+        if (!existing.empty) {
+            throw new Error('❌ Этот email уже есть в списке!');
+        }
+
+        // Генерируем уникальный код
+        let code;
+        let isUnique = false;
+        while (!isUnique) {
+            code = generateInviteCode();
+            const codeCheck = await getDocs(query(
+                collection(db, 'invites'),
+                where('code', '==', code)
+            ));
+            isUnique = codeCheck.empty;
+        }
+
+        // Сохраняем в Firebase
+        await addDoc(collection(db, 'invites'), {
+            email: email,
+            nick: nick || '—',
+            code: code,
+            used: false,
+            createdAt: new Date().toLocaleDateString('ru-RU'),
+            createdTime: new Date().toLocaleTimeString('ru-RU')
+        });
+
+        // Показываем результат
+        document.getElementById('generatedCode').textContent = code;
+        document.getElementById('addedEmail').textContent = '📧 Для: ' + email + (nick ? ' (' + nick + ')' : '');
+        document.getElementById('addResult').style.display = 'block';
+        document.getElementById('newEmail').value = '';
+        document.getElementById('newNick').value = '';
+        window._lastCode = code;
+
+    } catch (error) {
+        alertBox.textContent = error.message || '❌ Ошибка!';
+        alertBox.style.display = 'block';
+    }
+
+    btn.innerHTML = 'СГЕНЕРИРОВАТЬ КОД И ДОБАВИТЬ';
+    btn.disabled = false;
+};
+
+// КОПИРОВАТЬ КОД
+window.copyInviteCode = function() {
+    navigator.clipboard.writeText(window._lastCode || '').then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = '✅ Скопировано!';
+        setTimeout(() => btn.textContent = '📋 Скопировать код', 1500);
+    });
+};
+
+// ЗАГРУЗИТЬ СПИСОК
+window.loadInvites = async function() {
+    const list = document.getElementById('inviteList');
+    const count = document.getElementById('totalCount');
+    list.innerHTML = '<p style="text-align:center; color:#94a3b8; padding:20px;">Загрузка...</p>';
+
+    try {
+        const snap = await getDocs(collection(db, 'invites'));
+        window.allInvites = [];
+        snap.forEach(d => window.allInvites.push({id: d.id, ...d.data()}));
+        count.textContent = snap.size;
+        renderInvites(window.allInvites);
+    } catch (error) {
+        list.innerHTML = '<p style="text-align:center; color:#ef4444;">❌ Ошибка загрузки</p>';
+    }
+};
+
+// ОТОБРАЗИТЬ СПИСОК
+window.renderInvites = function(invites) {
+    const list = document.getElementById('inviteList');
+    if (invites.length === 0) {
+        list.innerHTML = '<p style="text-align:center; color:#94a3b8; padding:20px;">Список пуст</p>';
+        return;
+    }
+    list.innerHTML = invites.map(inv => `
+        <div class="invite-card">
+            <h3>
+                📧 ${inv.email}
+                <span class="status-badge ${inv.used ? 'status-used' : 'status-waiting'}">
+                    ${inv.used ? '✅ Использован' : '⏳ Ожидает'}
+                </span>
+            </h3>
+            ${inv.nick !== '—' ? `<p>🎮 Ник: ${inv.nick}</p>` : ''}
+            <p>
+                🔢 Код: 
+                <span class="code-badge" style="font-size:16px; padding:3px 8px;">${inv.code}</span>
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('${inv.code}')">Копировать</button>
+            </p>
+            <p>📅 Добавлен: ${inv.createdAt} в ${inv.createdTime}</p>
+        </div>
+    `).join('');
+};
+
+// ПОИСК
+window.filterInvites = function() {
+    const q = document.getElementById('searchInvite').value.toLowerCase();
+    const filtered = window.allInvites.filter(i =>
+        i.email.toLowerCase().includes(q) ||
+        (i.nick && i.nick.toLowerCase().includes(q))
+    );
+    renderInvites(filtered);
+};
+
+</script>
+
+<script>
+    // СЕКРЕТНЫЙ ПАРОЛЬ АДМИНА (измени на свой!)
+    const ADMIN_PASSWORD = "admin1234";
+
+    // ВХОД В АДМИНКУ
+    window.adminLogin = function() {
+        const pass = document.getElementById('adminPass').value;
+        const alertBox = document.getElementById('loginAlert');
+
+        if (pass === ADMIN_PASSWORD) {
+            document.getElementById('adminLogin').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+        } else {
+            alertBox.textContent = '❌ Неверный пароль!';
+            alertBox.style.display = 'block';
+        }
+    };
+
+    // Enter для входа
+    document.getElementById('adminPass').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') window.adminLogin();
+    });
+
+    // Переключение вкладок
+    function switchTab(tab, el) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(tab).classList.add('active');
+        el.classList.add('active');
+        if (tab === 'list') window.loadInvites();
+    }
+    window.switchTab = switchTab;
+</script>
+
+</body>
+</html>
