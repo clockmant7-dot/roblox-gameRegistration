@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
     <meta name="theme-color" content="#0f172a">
-    <title>Roblox Activation System</title>
+    <title>GameVerse - Система Активации</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -446,8 +446,8 @@
 <body>
 <div class="container">
     <div class="logo">
-        <h2>⚙️ ROBLOX STUDIO</h2>
-        <p>СИСТЕМА АКТИВАЦИИ И АККАУНТОВ</p>
+        <h2>🎮 GAMEVERSE</h2>
+        <p>СИСТЕМА АКТИВАЦИИ ИГРОКОВ</p>
     </div>
 
     <div class="tabs">
@@ -464,15 +464,15 @@
                 <input type="text" id="inviteCode" class="invite-input" placeholder="0000" maxlength="4" required>
             </div>
             <div class="form-group">
-                <label>НИКНЕЙМ В ROBLOX *</label>
-                <input type="text" id="robloxNick" placeholder="Точно как в игре" required>
+                <label>ИГРОВОЙ НИКНЕЙМ *</label>
+                <input type="text" id="robloxNick" placeholder="Ваш никнейм в игре" required>
             </div>
             <div class="form-group">
                 <label>EMAIL *</label>
                 <input type="email" id="email" placeholder="example@gmail.com" required>
             </div>
             <div class="form-group">
-                <label>ИМЯ ПЕРСОНАЖА *</label>
+                <label>ИМЯ *</label>
                 <div class="input-row">
                     <select id="firstName" required></select>
                     <button type="button" class="rand-btn" onclick="randSelect('firstName')">🎲</button>
@@ -527,7 +527,7 @@
         <!-- Успех -->
         <div id="regSuccess" style="display:none; text-align:center;">
             <p style="color:#16a34a; font-weight:700; font-size:18px; margin-bottom:8px;">🎉 Регистрация успешна!</p>
-            <p style="font-size:14px; color:#718096; margin-bottom:15px; font-weight:500;">Ваш код активации для Roblox:</p>
+            <p style="font-size:14px; color:#718096; margin-bottom:15px; font-weight:500;">Ваш код активации:</p>
             <div class="code-box" id="regCode" onclick="copyCode('regCode')" title="Нажмите чтобы скопировать"></div>
             <p style="font-size:12px; color:#a0aec0; margin-bottom:18px;">👆 Нажмите на код чтобы скопировать</p>
             <button class="btn btn-secondary" onclick="resetReg()">← НАЗАД</button>
@@ -562,10 +562,10 @@
                 <p id="profileEmail"></p>
                 <p id="profileDate"></p>
             </div>
-            <p style="font-size:13px; color:#2d3748; margin-bottom:8px; font-weight:600;">🔑 Код активации для Roblox:</p>
+            <p style="font-size:13px; color:#2d3748; margin-bottom:8px; font-weight:600;">🔑 Код активации:</p>
             <div class="code-box" id="loginCode" onclick="copyCode('loginCode')" title="Нажмите чтобы скопировать"></div>
             <p style="font-size:12px; color:#a0aec0; margin-bottom:12px; text-align:center;">👆 Нажмите на код чтобы скопировать</p>
-            <button class="btn btn-warning" onclick="quickSwitch()" style="margin-top:12px;">🔄 Быстрая смена аккаунта</button>
+            <button class="btn btn-warning" onclick="quickSwitch()" style="margin-top:12px;">🔄 Другой аккаунт</button>
             <button class="btn btn-danger" onclick="logout()">🚪 Выйти</button>
         </div>
     </div>
@@ -607,7 +607,7 @@ function getCode(nick) {
     nick = nick.toLowerCase().trim();
     for (let i = 0; i < nick.length; i++) sum += nick.charCodeAt(i) * (i + 1);
     const s = String((sum * 777) + 12345).padEnd(8, '0');
-    return `RBX-${s.slice(0,4)}-${s.slice(4,8)}`;
+    return `GV-${s.slice(0,4)}-${s.slice(4,8)}`;
 }
 window.getCode = getCode;
 
