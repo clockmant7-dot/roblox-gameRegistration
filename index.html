@@ -251,6 +251,16 @@ document.getElementById('regForm').onsubmit = async function(e) {
     alertBox.style.display = 'none';
 
     try {
+        // ✅ НОВАЯ ПРОВЕРКА: Проверяем не администратор ли это
+        const adminSnap = await getDocs(query(
+            collection(db, 'admins'),
+            where('email', '==', email)
+        ));
+
+        if (!adminSnap.empty) {
+            throw new Error('❌ Этот email зарезервирован для администратора! Используйте другой email.');
+        }
+
         // Проверяем код приглашения
         const inviteSnap = await getDocs(query(
             collection(db, 'invites'),
